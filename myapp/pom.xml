@@ -91,6 +91,23 @@
 		    <artifactId>dotenv-java</artifactId>
 		    <version>3.0.0</version>
 		</dependency>
+		 <dependency>
+	        <groupId>org.apache.tomcat.embed</groupId>
+	        <artifactId>tomcat-embed-jasper</artifactId>
+	    </dependency>
+	
+	    <!-- JSTL (JSP 표준 태그 라이브러리) -->
+	    <dependency>
+	        <groupId>jakarta.servlet.jsp.jstl</groupId>
+	        <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+	        <version>3.0.0</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.glassfish.web</groupId>
+	        <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+	        <version>3.0.1</version>
+	    </dependency>
+
 	</dependencies>
 
 	<build>
