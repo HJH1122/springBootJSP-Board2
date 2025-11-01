@@ -11,18 +11,26 @@
 	<table>
 	<tr>
 		<th>번호</th>
-		<td><input name="no" value="10"></td>
+		<td><input name="no" value="10" readonly="readonly"></td>
+	</tr>
+	<tr>
+		<th>제목</th>
+		<td><input name="title" value="공지 제목"></td>
 	</tr>
 	<tr>
 		<th>내용</th>
-		<td><textarea rows="5" style="width: 600px;"></textarea></td>
+		<td><textarea rows="5" cols="80" name="content">내용 입니다.</textarea></td>
 	</tr>
 	<tr>
 		<th>작성자</th>
-		<td><input name="writer"></td>
+		<td><input name="writer">홍길동</td>
 	</tr>
 	<tr>
-		<td colspan="2"><button>수정</button></td>
+		<td colspan="2">
+			<button>수정</button>
+			<button type="reset">새로입력</button>
+			<button type="button" onclick="history.back()">취소</button>
+		</td>
 	</tr>
 	
 	</table>

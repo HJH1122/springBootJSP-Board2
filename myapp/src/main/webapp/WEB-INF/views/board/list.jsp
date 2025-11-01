@@ -6,7 +6,7 @@
 	<h1>리스트</h1>
 </head>
 <body>
-
+${list}
 
 <table>
 <tr>

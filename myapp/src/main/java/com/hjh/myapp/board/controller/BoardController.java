@@ -2,11 +2,15 @@ package com.hjh.myapp.board.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hjh.myapp.Service;
+import com.hjh.myapp.board.vo.BoardVO;
 import com.hjh.myapp.util.page.PageObject;
 
 @Controller
@@ -15,10 +19,20 @@ public class BoardController {
 	
 	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
 	
+	private Service boardListService;
+	
+	@Autowired
+	public void setBoardListService(Service boardListService) {
+		this.boardListService = boardListService;
+	}
+
 	@GetMapping("/list.do")
-	public String list(PageObject pageObject) throws Exception{
+	public String list(PageObject pageObject, Model model) throws Exception{
 		
 		log.info("게시판 리스트 처리");
+		
+		model.addAttribute("list", boardListService.service(pageObject));
+		model.addAttribute("pageObject", pageObject);
 		
 		return "board/list";
 	}
@@ -32,9 +46,9 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write.do")
-	public String write() throws Exception{
+	public String write(BoardVO vo) throws Exception{
 		
-		log.info("게시판 글쓰기 처리");
+		log.info("게시판 글쓰기 처리 vo:"+ vo);
 		
 		return "redirect:list.do";
 	}
@@ -43,7 +57,7 @@ public class BoardController {
 	@GetMapping("/view.do")
 	public String view(long no) throws Exception{
 		
-		log.info("게시판 글보기 no:" , no);
+		log.info("게시판 글보기 no:" + no);
 		
 		return "board/view";
 	}
@@ -51,15 +65,15 @@ public class BoardController {
 	@GetMapping("/update.do")
 	public String updateForm(long no) throws Exception{
 		
-		log.info("게시판 수정 폼 no:" , no);
+		log.info("게시판 수정 폼 no:" + no);
 		
 		return "board/update";
 	}
 	
 	@PostMapping("/update.do")
-	public String update() throws Exception{
+	public String update(BoardVO vo) throws Exception{
 		
-		log.info("게시판 수정 처리");
+		log.info("게시판 수정 처리 vo="+ vo);
 		
 		return "redirect:view.do?no=10";
 	}
@@ -67,7 +81,7 @@ public class BoardController {
 	@GetMapping("/delete.do")
 	public String delete(long no) throws Exception{
 		
-		log.info("게시판 글삭제 처리 no:" , no);
+		log.info("게시판 글삭제 처리 no:" + no);
 		
 		return "redirect:list.do";
 	}

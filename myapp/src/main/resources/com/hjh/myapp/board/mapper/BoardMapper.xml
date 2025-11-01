@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org/dtd/mybatis-3-mapper.dtd"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hjh.myapp.board.mapper.BoardMapper">
+
+	<select id="getTotalRow" resultType="java.lang.Long">
+		SELECT count(*)
+		FROM board1
+
+	</select>
+
+	<select id="list" resultType="com.hjh.myapp.board.vo.BoardVO">
+		    SELECT 
+		        no,
+		        title,
+		        writer,
+		        write_date AS writeDate,
+		        hit,
+		        (select count(*) from board_reply br where br.no = board1.no) AS replyCnt
+		    FROM board1
+		    ORDER BY no DESC
+		    LIMIT #{perPageNum} OFFSET #{limit}
+	</select>
+	
+	
+</mapper>
