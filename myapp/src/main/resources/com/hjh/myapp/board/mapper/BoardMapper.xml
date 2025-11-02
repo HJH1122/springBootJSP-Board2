@@ -4,12 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hjh.myapp.board.mapper.BoardMapper">
 
-	<select id="getTotalRow" resultType="java.lang.Long">
-		SELECT count(*)
-		FROM board1
-
-	</select>
-
 	<select id="list" resultType="com.hjh.myapp.board.vo.BoardVO">
 		    SELECT 
 		        no,
@@ -23,5 +17,28 @@
 		    LIMIT #{perPageNum} OFFSET #{limit}
 	</select>
 	
+	<select id="getTotalRow" resultType="java.lang.Long">
+		SELECT count(*)
+		FROM board1
+
+	</select>
+	
+	
+	<update id="increase">
+		update board1 set hit = hit + 1 where no = #{no}
+
+	</update>
+	
+	<select id="view" resultType="com.hjh.myapp.board.vo.BoardVO">
+		SELECT 
+		        no,
+		        title,
+		        writer,
+		        write_date AS writeDate,
+		        hit
+	    FROM board1
+	    WHERE no = #{no}
+
+	</select>
 	
 </mapper>

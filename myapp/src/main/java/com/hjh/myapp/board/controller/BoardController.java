@@ -10,20 +10,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hjh.myapp.Service;
+import com.hjh.myapp.board.service.BoardViewService;
 import com.hjh.myapp.board.vo.BoardVO;
 import com.hjh.myapp.util.page.PageObject;
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
+
+    private final BoardViewService boardViewService_1;
 	
 	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
 	
 	private Service boardListService;
+	private Service boardViewService;
+
+    BoardController(BoardViewService boardViewService_1) {
+        this.boardViewService_1 = boardViewService_1;
+    }
 	
 	@Autowired
 	public void setBoardListService(Service boardListService) {
 		this.boardListService = boardListService;
+	}
+	@Autowired
+	public void setBoardViewService(Service boardViewService) {
+		this.boardViewService = boardViewService;
 	}
 
 	@GetMapping("/list.do")
@@ -55,9 +67,10 @@ public class BoardController {
 	
 	
 	@GetMapping("/view.do")
-	public String view(long no) throws Exception{
+	public String view(long no, int inc, Model model) throws Exception{
 		
 		log.info("게시판 글보기 no:" + no);
+		model.addAttribute("vo", boardViewService.service(new Object[]{no, inc}));
 		
 		return "board/view";
 	}

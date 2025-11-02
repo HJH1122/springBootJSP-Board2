@@ -13,5 +13,9 @@ public interface BoardMapper {
 	public List<BoardVO> list(PageObject pageObject) throws Exception;
 	
 	public long getTotalRow(PageObject pageObject) throws Exception;
+	
+	public int increase(long no) throws Exception;
+	
+	public BoardVO view(long no) throws Exception;
 
 }

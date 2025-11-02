@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,23 +12,27 @@
 <table>
 <tr>
 	<th>번호</th>
-	<th>10</th>
+	<th>${vo.no}</th>
 </tr>
 <tr>
 	<th>제목</th>
-	<th>제목1</th>
+	<th>${vo.title}</th>
 </tr>
 <tr>
 	<th>내용</th>
-	<th>내용입니다</th>
+	<th>${vo.content}</th>
 </tr>
 <tr>
 	<th>작성자</th>
-	<th>작성자</th>
+	<th>${vo.no}</th>
+</tr>
+<tr>
+	<th>작성일</th>
+	<th><fmt:formatDate value="${vo.writeDate}" pattern="yyyy-MM-dd"/></th>
 </tr>
 <tr>
 	<th>조회수</th>
-	<th>10</th>
+	<th>${vo.hit}</th>
 </tr>
 </table>
 
