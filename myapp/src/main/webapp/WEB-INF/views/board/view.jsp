@@ -36,8 +36,8 @@
 </tr>
 </table>
 
-<a href="/board/update.do?no=10">글수정</a>
-<a href="/board/delete.do?no=10">글삭제</a>
+<a href="/board/update.do?no=${vo.no}">글수정</a>
+<a href="/board/delete.do?no=${vo.no}">글삭제</a>
 
 </body>
 </html>

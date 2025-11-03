@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hjh.myapp.Service;
 import com.hjh.myapp.board.service.BoardViewService;
+import com.hjh.myapp.board.service.BoardWriteService;
 import com.hjh.myapp.board.vo.BoardVO;
 import com.hjh.myapp.util.page.PageObject;
 
@@ -18,15 +19,20 @@ import com.hjh.myapp.util.page.PageObject;
 @RequestMapping("/board")
 public class BoardController {
 
+    private final BoardWriteService boardWriteService_1;
+
     private final BoardViewService boardViewService_1;
 	
 	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
 	
 	private Service boardListService;
 	private Service boardViewService;
+	private Service boardWriteService;
+	private Service boardUpdateService;
 
-    BoardController(BoardViewService boardViewService_1) {
+    BoardController(BoardViewService boardViewService_1, BoardWriteService boardWriteService_1) {
         this.boardViewService_1 = boardViewService_1;
+        this.boardWriteService_1 = boardWriteService_1;
     }
 	
 	@Autowired
@@ -36,6 +42,14 @@ public class BoardController {
 	@Autowired
 	public void setBoardViewService(Service boardViewService) {
 		this.boardViewService = boardViewService;
+	}
+	@Autowired
+	public void setBoardWriteService(Service boardWriteService) {
+		this.boardWriteService = boardWriteService;
+	}
+	@Autowired
+	public void setBoardUpdateService(Service boardUpdateService) {
+		this.boardUpdateService = boardUpdateService;
 	}
 
 	@GetMapping("/list.do")
@@ -61,6 +75,7 @@ public class BoardController {
 	public String write(BoardVO vo) throws Exception{
 		
 		log.info("게시판 글쓰기 처리 vo:"+ vo);
+		boardWriteService.service(vo);
 		
 		return "redirect:list.do";
 	}
@@ -76,10 +91,10 @@ public class BoardController {
 	}
 	
 	@GetMapping("/update.do")
-	public String updateForm(long no) throws Exception{
+	public String updateForm(long no, Model model) throws Exception{
 		
 		log.info("게시판 수정 폼 no:" + no);
-		
+		model.addAttribute("vo", boardViewService.service(new Object[]{no, 0}));
 		return "board/update";
 	}
 	
@@ -87,8 +102,9 @@ public class BoardController {
 	public String update(BoardVO vo) throws Exception{
 		
 		log.info("게시판 수정 처리 vo="+ vo);
+		boardUpdateService.service(vo);
 		
-		return "redirect:view.do?no=10";
+		return "redirect:view.do?no="+vo.getNo()+"&inc=0";
 	}
 	
 	@GetMapping("/delete.do")

@@ -11,19 +11,19 @@
 	<table>
 	<tr>
 		<th>번호</th>
-		<td><input name="no" value="10" readonly="readonly"></td>
+		<td><input name="no" value="${vo.no }" readonly="readonly"></td>
 	</tr>
 	<tr>
 		<th>제목</th>
-		<td><input name="title" value="공지 제목"></td>
+		<td><input name="title" value="${vo.title }"></td>
 	</tr>
 	<tr>
 		<th>내용</th>
-		<td><textarea rows="5" cols="80" name="content">내용 입니다.</textarea></td>
+		<td><textarea rows="5" cols="80" name="content">${vo.content}</textarea></td>
 	</tr>
 	<tr>
 		<th>작성자</th>
-		<td><input name="writer">홍길동</td>
+		<td><input name="writer" value="${vo.writer }"></td>
 	</tr>
 	<tr>
 		<td colspan="2">

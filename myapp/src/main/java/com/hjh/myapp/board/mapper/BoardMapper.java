@@ -17,5 +17,9 @@ public interface BoardMapper {
 	public int increase(long no) throws Exception;
 	
 	public BoardVO view(long no) throws Exception;
-
+	
+	public int write(BoardVO vo) throws Exception;
+	
+	public int update(BoardVO vo) throws Exception;
+ 
 }

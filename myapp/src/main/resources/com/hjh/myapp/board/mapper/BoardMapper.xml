@@ -34,11 +34,27 @@
 		        no,
 		        title,
 		        writer,
+		        content,
 		        write_date AS writeDate,
 		        hit
 	    FROM board1
 	    WHERE no = #{no}
 
 	</select>
+	
+	<insert id="write">
+		insert into board1(title, content, writer, write_date)
+		values (#{title}, #{content}, #{writer}, now())
+	</insert>
+	
+	<update id="update">
+		update board1
+		set 
+			title = #{title},
+			content = #{content},
+			writer = #{writer}
+		where no = #{no}
+			
+	</update>
 	
 </mapper>

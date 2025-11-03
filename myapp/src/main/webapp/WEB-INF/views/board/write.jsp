@@ -15,7 +15,7 @@
 	</tr>
 	<tr>
 		<th>내용</th>
-		<td><textarea rows="5" style="width: 600px;"></textarea></td>
+		<td><textarea rows="5" style="width: 600px;" name="content"></textarea></td>
 	</tr>
 	<tr>
 		<th>작성자</th>
