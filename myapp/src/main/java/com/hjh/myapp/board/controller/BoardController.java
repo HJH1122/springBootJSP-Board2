@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hjh.myapp.Service;
+import com.hjh.myapp.board.service.BoardDeleteService;
 import com.hjh.myapp.board.service.BoardViewService;
 import com.hjh.myapp.board.service.BoardWriteService;
 import com.hjh.myapp.board.vo.BoardVO;
@@ -18,6 +19,8 @@ import com.hjh.myapp.util.page.PageObject;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
+
+    private final BoardDeleteService boardDeleteService_1;
 
     private final BoardWriteService boardWriteService_1;
 
@@ -29,10 +32,12 @@ public class BoardController {
 	private Service boardViewService;
 	private Service boardWriteService;
 	private Service boardUpdateService;
+	private Service boardDeleteService;
 
-    BoardController(BoardViewService boardViewService_1, BoardWriteService boardWriteService_1) {
+    BoardController(BoardViewService boardViewService_1, BoardWriteService boardWriteService_1, BoardDeleteService boardDeleteService_1) {
         this.boardViewService_1 = boardViewService_1;
         this.boardWriteService_1 = boardWriteService_1;
+        this.boardDeleteService_1 = boardDeleteService_1;
     }
 	
 	@Autowired
@@ -50,6 +55,10 @@ public class BoardController {
 	@Autowired
 	public void setBoardUpdateService(Service boardUpdateService) {
 		this.boardUpdateService = boardUpdateService;
+	}
+	@Autowired
+	public void setBoardDeleteService(Service boardDeleteService) {
+		this.boardDeleteService = boardDeleteService;
 	}
 
 	@GetMapping("/list.do")
@@ -111,7 +120,7 @@ public class BoardController {
 	public String delete(long no) throws Exception{
 		
 		log.info("게시판 글삭제 처리 no:" + no);
-		
+		boardDeleteService.service(no);
 		return "redirect:list.do";
 	}
 }

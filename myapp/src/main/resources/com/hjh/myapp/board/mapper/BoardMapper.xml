@@ -57,4 +57,9 @@
 			
 	</update>
 	
+	<delete id="delete">
+		delete from board1
+		where no = #{no}
+	</delete>
+	
 </mapper>
