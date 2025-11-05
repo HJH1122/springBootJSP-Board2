@@ -1,6 +1,6 @@
 package com.hjh.myapp.util.page;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * package com.webjjang.util

@@ -2,13 +2,14 @@ package com.hjh.myapp.board.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jakarta.inject.Inject;  
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.hjh.myapp.Service;
 import com.hjh.myapp.board.controller.BoardController;
 import com.hjh.myapp.board.mapper.BoardMapper;
 import com.hjh.myapp.util.page.PageObject;
+
 
 @org.springframework.stereotype.Service
 public class BoardListService implements Service{
@@ -17,7 +18,7 @@ public class BoardListService implements Service{
 	
 	private BoardMapper mapper;
 	
-	@Inject
+	@Autowired
 	public void setMapper(BoardMapper mapper) {
 		this.mapper = mapper;
 	}
@@ -26,7 +27,7 @@ public class BoardListService implements Service{
 	@Override
 	public Object service(Object obj) throws Exception {
 		
-		PageObject pageObject = (PageObject) obj;
+		PageObject pageObject = (PageObject) obj;	
 		
 		pageObject.setTotalRow(mapper.getTotalRow(pageObject));
 		

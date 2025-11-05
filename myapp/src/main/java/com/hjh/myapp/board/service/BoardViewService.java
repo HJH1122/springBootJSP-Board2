@@ -1,9 +1,10 @@
 package com.hjh.myapp.board.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.hjh.myapp.Service;
 import com.hjh.myapp.board.mapper.BoardMapper;
 
-import jakarta.inject.Inject;
 
 @org.springframework.stereotype.Service
 public class BoardViewService implements Service {
@@ -11,7 +12,7 @@ public class BoardViewService implements Service {
 	private BoardMapper mapper;
 
 	
-	@Inject
+	@Autowired
 	public void setMapper(BoardMapper mapper) {
 		this.mapper = mapper;
 	}
