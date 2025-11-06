@@ -66,6 +66,8 @@ public class BoardController {
 		
 		log.info("게시판 리스트 처리");
 		
+		if(pageObject.getPerPageNum() == 10) pageObject.setPerPageNum(8);
+		
 		model.addAttribute("list", boardListService.service(pageObject));
 		model.addAttribute("pageObject", pageObject);
 		

@@ -11,6 +11,7 @@
 		        writer,
 		        write_date AS writeDate,
 		        hit,
+		        file_name AS fileName,
 		        (select count(*) from board_reply br where br.no = board1.no) AS replyCnt
 		    FROM board1
 		    ORDER BY no DESC
@@ -36,7 +37,8 @@
 		        writer,
 		        content,
 		        write_date AS writeDate,
-		        hit
+		        hit,
+		        file_name AS fileName
 	    FROM board1
 	    WHERE no = #{no}
 

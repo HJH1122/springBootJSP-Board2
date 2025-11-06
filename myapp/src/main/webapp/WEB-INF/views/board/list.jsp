@@ -29,26 +29,20 @@ $(function(){
 
 <body>
 <div class="container">
-<table class="table">
-<tr>
-	<th>번호</th>
-	<th>제목</th>
-	<th>작성자</th>
-	<th>작성일</th>
-	<th>조회수</th>
-</tr>
-<c:forEach items="${list}" var="vo">
-<tr class="dataRow">
-	<th class="no">${vo.no }</th>
-	<th>${vo.title }</th>
-	<th>${vo.writer }</th>
-	<th><fmt:formatDate value="${vo.writeDate}" pattern="yyyy-MM-dd"/></th>
-	<th>${vo.hit }</th>
-</tr>
-</c:forEach>
-
-</table>
-
+	 <div class="row">
+	 <c:forEach items="${list }" var="vo" varStatus="vs">
+		  <div class="col-md-3">
+		    <div class="thumbnail">
+		        <img src="${vo.fileName }" alt="Lights" style="width:100%">
+		        <div class="caption">
+		          <p><span class="no">${vo.no }</span>. ${vo.title }</p>
+		          <div>${vo.writer }(<fmt:formatDate value="${vo.writeDate }" pattern="yyyy-MM-dd" />)</div>
+		        </div>
+		    </div>
+		  </div>
+		  
+	  </c:forEach>
+	 </div>
 <a href="/board/write.do" class="btn btn-default">글쓰기</a>
 </div>
 </body>
