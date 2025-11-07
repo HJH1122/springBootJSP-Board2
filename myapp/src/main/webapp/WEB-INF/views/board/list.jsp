@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="pageNav" tagdir="/WEB-INF/tags" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +14,7 @@
 		cursor: pointer;
 	}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript">
 $(function(){
 	
@@ -40,10 +43,15 @@ $(function(){
 		        </div>
 		    </div>
 		  </div>
-		  
+		  <c:if test="${vs.count % 4 == 0 && vs.count != pageObject.perPageNum }">
+		  		${"</div>"}
+		  		${"<div class='row'>"}
+		  </c:if>
 	  </c:forEach>
+	  <div><pageNav:pageNav listURI="list.do" pageObject="${pageObject }"/></div>
+	  <div><a href="/board/write.do?perPageNum=${pageObject.perPageNum }" class="btn btn-default">글쓰기</a></div>
 	 </div>
-<a href="/board/write.do" class="btn btn-default">글쓰기</a>
+
 </div>
 </body>
 </html>

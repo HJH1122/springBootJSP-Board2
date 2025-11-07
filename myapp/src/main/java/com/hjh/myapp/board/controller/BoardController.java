@@ -1,5 +1,8 @@
 package com.hjh.myapp.board.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,9 @@ import com.hjh.myapp.board.service.BoardDeleteService;
 import com.hjh.myapp.board.service.BoardViewService;
 import com.hjh.myapp.board.service.BoardWriteService;
 import com.hjh.myapp.board.vo.BoardVO;
+import com.hjh.myapp.util.file.FileUtil;
 import com.hjh.myapp.util.page.PageObject;
+
 
 @Controller
 @RequestMapping("/board")
@@ -83,12 +88,13 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write.do")
-	public String write(BoardVO vo) throws Exception{
+	public String write(BoardVO vo, HttpSession session, HttpServletRequest request, int perPageNum) throws Exception{
 		
 		log.info("게시판 글쓰기 처리 vo:"+ vo);
+		vo.setFileName(FileUtil.upload("/upload/image", vo.getImageFile(), request));
 		boardWriteService.service(vo);
 		
-		return "redirect:list.do";
+		return "redirect:list.do?perPageNum="+perPageNum;
 	}
 	
 	

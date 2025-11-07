@@ -45,8 +45,8 @@
 	</select>
 	
 	<insert id="write">
-		insert into board1(title, content, writer, write_date)
-		values (#{title}, #{content}, #{writer}, now())
+		insert into board1(title, content, writer, write_date, file_name)
+		values (#{title}, #{content}, #{writer}, now(), #{fileName})
 	</insert>
 	
 	<update id="update">

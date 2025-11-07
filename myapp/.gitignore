@@ -34,3 +34,5 @@ build/
 
 # .gitignore
 .env
+
+/src/main/webapp/upload/image/

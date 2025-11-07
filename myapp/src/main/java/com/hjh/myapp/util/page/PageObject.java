@@ -1,18 +1,22 @@
 package com.hjh.myapp.util.page;
 
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 
+
 /**
- * package com.webjjang.util
+ * package com.webjjang.util.page
  * public class PageObject
  * @객체설명 페이지 처리를 위한 객체
  * - 데이터를 가져올 때 페이지 단위로 처리를 위한 객체 / 해당 페이지 가져올 데이터 계산
  * - 화면에 보여 줄 페이지 처리 / 전체 페이지 등
+ * - Tomcat 10 버전에 맞게 HttpServletRequest 변경
  * 
- * @과정명 : 스마트 웹 자바(JAVA) 개발자
- * @작성자 : 이영환
- * @작성일 : 2021-03-02
- * @버전 : 2.5
+ * @과정명 : 인터렉티브 생성형AI 풀스텍 개발자
+ * @작성자 : hjh
+ * @작성일 : 2025-10-09
+ * @버전 : 3.0
  */
 
 public class PageObject {
@@ -62,39 +66,24 @@ public class PageObject {
 		// 한페이당 10개의 글을 보이도록 셋팅한다.
 		this.page = 1;
 		this.perPageNum = 10;
+		this.startRow = 1;
+		this.endRow = 10;
+		
 		// JSP 하단 부분에 몇개의 페이지를 표시할지 정한다.
 		this.startPage = 1;
 		this.endPage = 1;
 		this.perGroupPageNum = 10;
 		// service 프로그램에서 setTotalRow(DB의데이터갯수) 호출을 해야만 한다. 그래야 자동 계산이 된다.
 		
-		// 기본적으로 찾는 공지 분류 - 현재 공지 :pre
+		// 기본적으로 찾는 공지 분류 - 현재 공지 :pre -[old, res, all]
 		this.period = "pre";
 		
 	}
 	
 	// 객체로 만들어 주는 메서드 -> 웹프로젝트의  request 객체를 이용해서
 	public static PageObject getInstance(HttpServletRequest request) throws Exception {
-
-		// 페이지 처리를 위한 프로그램
-		// 페이지 처리를 위한 객체 사용
-		PageObject pageObject = new PageObject();
-		// 페이지에 대한 정보를 받는다.
-		// page는 jsp에서 기본객체로 사용하고 있다. -> 페이지의 정보가 담겨져 있다.
-		String strPage = request.getParameter("page");
-		// 넘어오는 페이지가 있는 경우는 넘어오는 페이지를 현재 페이지로 셋팅. 그렇지 않으면 1이 셋팅된다.
-		if(strPage != null && !strPage.equals("")) pageObject.setPage(Integer.parseInt(strPage));
-		// 한페이지에 표시할 데이터의 수를 받는다.
-		String strPerPageNum = request.getParameter("perPageNum");
-		// 한 페이지당 표시할 데이터의 수가 안넘어오면 10으로 셋팅된다. 넘어오면 넘어 오는 데이터를 사용한다.
-		if(strPerPageNum != null && !strPerPageNum.equals("")) pageObject.setPerPageNum(Integer.parseInt(strPerPageNum));
 		
-		// 검색을 위한 데이터 전달
-		pageObject.setKey(request.getParameter("key"));
-		pageObject.setWord(request.getParameter("word"));
-		
-		// PageObject - 확인
-		System.out.println("PageObject.getInstance() [pageObject = " + pageObject + " ]");
+		PageObject pageObject = PageObject.getInstance(request, "page", "perPageNum");
 
 		return pageObject;
 	}
@@ -118,7 +107,7 @@ public class PageObject {
 		// 검색을 위한 데이터 전달
 		pageObject.setKey(request.getParameter("key"));
 		pageObject.setWord(request.getParameter("word"));
-		
+
 		// PageObject - 확인
 		System.out.println("PageObject.getInstance() [pageName = " + pageName + " ]");
 		System.out.println("PageObject.getInstance() [perPageNumName = " + perPageNumName + " ]");
@@ -234,6 +223,20 @@ public class PageObject {
 	// mariaDB를 위한 limit 가져가기
 	public Long getLimit() {
 		return (page - 1) * perPageNum;
+	}
+	
+	public String getNotPageQuery() throws Exception {
+		return ""
+		+ "perPageNum=" + getPerPageNum()
+		+ "&key=" + ((getKey() == null)?"":getKey())
+		+ "&word=" + ((getWord() == null)?"":URLEncoder.encode(getWord(),"utf-8"))
+		;
+	}
+	
+	public String getPageQuery() throws Exception {
+		return "page=" + getPage()
+		+ "&" + getNotPageQuery()
+		;
 	}
 	
 	@Override
