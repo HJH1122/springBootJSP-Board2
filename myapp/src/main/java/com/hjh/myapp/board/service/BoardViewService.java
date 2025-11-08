@@ -26,7 +26,8 @@ public class BoardViewService implements Service {
 		Object[] objs = (Object[]) obj;
 		
 		long no = (Long) objs[0];
-		int inc = (Integer) objs[1];
+	    Integer incObj = (Integer) objs[1];
+	    int inc = (incObj != null) ? incObj : 0; // null이면 0으로 처리
 		
 		if(inc == 1) {
 			mapper.increase(no);

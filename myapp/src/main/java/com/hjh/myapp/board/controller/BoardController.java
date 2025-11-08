@@ -99,7 +99,7 @@ public class BoardController {
 	
 	
 	@GetMapping("/view.do")
-	public String view(long no, int inc, Model model) throws Exception{
+	public String view(long no, Integer inc, Model model) throws Exception{
 		
 		log.info("게시판 글보기 no:" + no);
 		model.addAttribute("vo", boardViewService.service(new Object[]{no, inc}));

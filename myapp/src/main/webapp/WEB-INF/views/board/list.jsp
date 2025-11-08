@@ -20,13 +20,15 @@ $(function(){
 	
 	$(".dataRow").click(function(){
 		var no = $(this).find(".no").text();
-		location = "view.do?no=" +no+ "&inc=1"
+		location = "view.do?no=" +no
 				+ "&page=${pageObject.page}"
 				+ "&perPageNum=${pageObject.perPageNum}"
 				+ "&key=${pageObject.key}"
 				+ "&word=${pageObject.word}"
 	});
 });
+
+
 </script>
 </head>
 
@@ -34,7 +36,7 @@ $(function(){
 <div class="container">
 	 <div class="row">
 	 <c:forEach items="${list }" var="vo" varStatus="vs">
-		  <div class="col-md-3">
+		  <div class="col-md-3 dataRow">
 		    <div class="thumbnail">
 		        <img src="${vo.fileName }" alt="Lights" style="width:100%">
 		        <div class="caption">
