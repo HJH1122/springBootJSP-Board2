@@ -18,6 +18,8 @@ public interface BoardMapper {
 	
 	public BoardVO view(long no) throws Exception;
 	
+	public int imageChange(BoardVO vo) throws Exception;
+	
 	public int write(BoardVO vo) throws Exception;
 	
 	public int update(BoardVO vo) throws Exception;

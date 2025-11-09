@@ -30,6 +30,11 @@
 
 	</update>
 	
+	<update id="imageChange">
+		update board1 set file_name = #{fileName} where no = #{no}
+
+	</update>
+	
 	<select id="view" resultType="com.hjh.myapp.board.vo.BoardVO">
 		SELECT 
 		        no,

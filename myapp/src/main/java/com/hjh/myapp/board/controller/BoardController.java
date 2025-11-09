@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hjh.myapp.Service;
 import com.hjh.myapp.board.service.BoardDeleteService;
+import com.hjh.myapp.board.service.BoardFileService;
 import com.hjh.myapp.board.service.BoardViewService;
 import com.hjh.myapp.board.service.BoardWriteService;
 import com.hjh.myapp.board.vo.BoardVO;
@@ -30,6 +31,8 @@ public class BoardController {
     private final BoardWriteService boardWriteService_1;
 
     private final BoardViewService boardViewService_1;
+    
+    private final BoardFileService boardFileService_1;
 	
 	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
 	
@@ -38,11 +41,14 @@ public class BoardController {
 	private Service boardWriteService;
 	private Service boardUpdateService;
 	private Service boardDeleteService;
+	private Service boardFileService;
 
-    BoardController(BoardViewService boardViewService_1, BoardWriteService boardWriteService_1, BoardDeleteService boardDeleteService_1) {
+    BoardController(BoardViewService boardViewService_1, BoardWriteService boardWriteService_1, BoardDeleteService boardDeleteService_1, BoardFileService boardFileService_1) {
         this.boardViewService_1 = boardViewService_1;
         this.boardWriteService_1 = boardWriteService_1;
         this.boardDeleteService_1 = boardDeleteService_1;
+        this.boardFileService_1 = boardFileService_1;
+        
     }
 	
 	@Autowired
@@ -64,6 +70,10 @@ public class BoardController {
 	@Autowired
 	public void setBoardDeleteService(Service boardDeleteService) {
 		this.boardDeleteService = boardDeleteService;
+	}
+	@Autowired
+	public void setBoardFileService(Service boardFileService) {
+		this.boardFileService = boardFileService;
 	}
 
 	@GetMapping("/list.do")
@@ -105,6 +115,20 @@ public class BoardController {
 		model.addAttribute("vo", boardViewService.service(new Object[]{no, inc}));
 		
 		return "board/view";
+	}
+	
+	@PostMapping("/imageChange.do")
+	public String imageChange(PageObject pageObject, BoardVO vo, HttpServletRequest request) throws Exception{
+		
+		vo.setFileName(FileUtil.upload("/upload/image", vo.getImageFile(), request));
+		boardFileService.service(vo);
+		FileUtil.remove(FileUtil.getRealPath("", vo.getDeleteName(), request));
+		
+		return "redirect:view.do?no=" + vo.getNo()
+		+ "&page=" + pageObject.getPage()
+		+ "&perPageNum=" + pageObject.getPerPageNum()
+		+ "&key=" + pageObject.getKey()
+		+ "&word=" + pageObject.getWord();
 	}
 	
 	@GetMapping("/update.do")

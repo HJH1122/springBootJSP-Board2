@@ -8,7 +8,7 @@ import com.hjh.myapp.board.vo.BoardVO;
 
 
 @org.springframework.stereotype.Service
-public class BoardFileService{
+public class BoardFileService implements Service {
 	
 	private BoardMapper mapper;
 
@@ -17,9 +17,10 @@ public class BoardFileService{
 		this.mapper = mapper;
 	}
 
-	public int imageChange(BoardVO vo) throws Exception {
-		
-		return 0;
+	@Override
+	public Object service(Object obj) throws Exception {
+		BoardVO vo = (BoardVO) obj;
+		return mapper.imageChange(vo);
 	}
 	
 
