@@ -19,8 +19,13 @@
 			$("#imageChangeDivShowBtn").click(function(){
 				$("#imageChangeDiv").show();
 			});
+			$("#deleteBtn").click(function(){
+				return confirm("정말 삭제하시겠습니까?");
+			});
 			
 		});
+		
+		
 	</script>
 </head>
 <body>
@@ -57,8 +62,9 @@
 	</ul>
 
 	<div>
+		<div class="alert alert-warning"><strong>수정 유의사항</strong> 정보만 수정할 수 있습니다. 이미지 파일을 이미지 아래 바꾸기 버튼을 사용하세요.</div>
 		<a href="/board/update.do?no=${vo.no}&page=${param.page }&perPageNum=${param.perPageNum}&key=${param.key}&word=${param.word}" class="btn btn-default">글수정</a>
-		<a href="/board/delete.do?no=${vo.no}&deleteName=${vo.deleteName}&perPageNum=${param.perPageNum}" class="btn btn-default">글삭제</a>
+		<a href="/board/delete.do?no=${vo.no}&deleteName=${vo.deleteName}&perPageNum=${param.perPageNum}" class="btn btn-default" id="deleteBtn">글삭제</a>
 		<a href="/board/list.do?page=${param.page }&perPageNum=${param.perPageNum}&key=${param.key}&word=${param.word}" class="btn btn-default">리스트</a>
 	</div>
 </div>

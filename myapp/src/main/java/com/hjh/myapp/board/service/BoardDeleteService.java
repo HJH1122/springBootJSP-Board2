@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hjh.myapp.Service;
 import com.hjh.myapp.board.mapper.BoardMapper;
+import com.hjh.myapp.board.vo.BoardVO;
 
 
 @org.springframework.stereotype.Service
@@ -19,9 +20,9 @@ public class BoardDeleteService implements Service {
 
 	@Override
 	public Object service(Object obj) throws Exception {
-		long no = (long) obj;
+		Long no = (Long) obj; 
 		
-		return mapper.delete(no);
+	    return mapper.delete(no);
 	}
 
 }

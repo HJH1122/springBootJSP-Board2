@@ -140,19 +140,25 @@ public class BoardController {
 	}
 	
 	@PostMapping("/update.do")
-	public String update(BoardVO vo) throws Exception{
+	public String update(BoardVO vo, PageObject pageObject) throws Exception{
 		
 		log.info("게시판 수정 처리 vo="+ vo);
 		boardUpdateService.service(vo);
 		
-		return "redirect:view.do?no="+vo.getNo()+"&inc=0";
+		return "redirect:view.do?no="+vo.getNo()
+		+"&page="+ pageObject.getPage()
+		+"&perPageNum="+ pageObject.getPerPageNum()
+		+"&key="+ pageObject.getKey()
+		+"&word="+ pageObject.getWord();
 	}
 	
 	@GetMapping("/delete.do")
-	public String delete(long no) throws Exception{
+	public String delete(BoardVO vo, HttpServletRequest request, int perPageNum) throws Exception{
 		
-		log.info("게시판 글삭제 처리 no:" + no);
-		boardDeleteService.service(no);
-		return "redirect:list.do";
+		log.info("게시판 글삭제 처리 no:" + vo);
+		boardDeleteService.service(vo.getNo());
+		FileUtil.remove(FileUtil.getRealPath("", vo.getDeleteName(), request));
+		
+		return "redirect:list.do?perPageNum="+ perPageNum;
 	}
 }

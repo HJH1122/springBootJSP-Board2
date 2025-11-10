@@ -24,6 +24,6 @@ public interface BoardMapper {
 	
 	public int update(BoardVO vo) throws Exception;
 	
-	public int delete(long no) throws Exception;
+	public int delete(long vo) throws Exception;
  
 }
