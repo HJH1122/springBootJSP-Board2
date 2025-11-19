@@ -14,6 +14,20 @@
 		        file_name AS fileName,
 		        (select count(*) from board_reply br where br.no = board1.no) AS replyCnt
 		    FROM board1
+		    WHERE 1 = 1
+		
+		    <if test="word != null and word != ''">
+		        <if test='key.contains("t")'>
+		            AND title LIKE CONCAT('%', #{word}, '%')
+		        </if>
+		        <if test='key.contains("c")'>
+		            AND content LIKE CONCAT('%', #{word}, '%')
+		        </if>
+		        <if test='key.contains("f")'>
+		            AND file_name LIKE CONCAT('%', #{word}, '%')
+		        </if>
+		    </if>
+		    
 		    ORDER BY no DESC
 		    LIMIT #{perPageNum} OFFSET #{limit}
 	</select>
@@ -21,7 +35,20 @@
 	<select id="getTotalRow" resultType="java.lang.Long">
 		SELECT count(*)
 		FROM board1
+	
+		WHERE 1 = 1
 
+	    <if test="word != null and word != ''">
+	        <if test='key.contains("t")'>
+	            AND title LIKE CONCAT('%', #{word}, '%')
+	        </if>
+	        <if test='key.contains("c")'>
+	            AND content LIKE CONCAT('%', #{word}, '%')
+	        </if>
+	        <if test='key.contains("f")'>
+	            AND file_name LIKE CONCAT('%', #{word}, '%')
+	        </if>
+	    </if>
 	</select>
 	
 	

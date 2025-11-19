@@ -26,6 +26,9 @@ $(function(){
 				+ "&key=${pageObject.key}"
 				+ "&word=${pageObject.word}"
 	});
+	var key = "${pageObject.key}";
+	if(!key) key = "t";
+	$("#key").val(key);
 });
 
 
@@ -34,6 +37,28 @@ $(function(){
 
 <body>
 <div class="container">
+	 <form class="form-inline">
+	 	<div class="input-group">
+	 		<select class="form-control" name="key" id="key">
+	 			<option value="t">제목</option>
+	 			<option value="c">내용</option>
+	 			<option value="f">파일</option>
+	 			<option value="tc">제목/내용</option>
+	 			<option value="tf">제목/파일</option>
+	 			<option value="ct">내용/파일</option>
+	 			<option value="tcf">모두</option>
+	 		</select>
+	 	</div>
+	  <div class="input-group">
+	    <input type="text" class="form-control" placeholder="Search" name="word" value="${pageObject.word }">
+	    <div class="input-group-btn">
+	      <button class="btn btn-default" type="submit">
+	        <i class="glyphicon glyphicon-search"></i>
+	      </button>
+	    </div>
+	  </div>
+	</form>
+
 	 <div class="row">
 	 <c:forEach items="${list }" var="vo" varStatus="vs">
 		  <div class="col-md-3 dataRow">
