@@ -12,6 +12,10 @@
 			display: none;
 			
 		}
+		
+		li > label{
+			width: 150px;
+		}
 	</style>
 	
 	<script type="text/javascript">
@@ -32,9 +36,9 @@
 <div class="container">
 
 	<ul class="list-group">
-		<li class="list-group-item">${vo.no }</li>
-		<li class="list-group-item">${vo.title }</li>
-		<li class="list-group-item">
+		<li class="list-group-item"><label>번호</label>${vo.no }</li>
+		<li class="list-group-item"><label>제목</label>${vo.title }</li>
+		<li class="list-group-item"><label>첨부이미지</label>
 			<img src="${vo.fileName }" />
 			<div>
 				<button id="imageChangeDivShowBtn">이미지 바꾸기</button>
@@ -56,9 +60,9 @@
 				</div>
 			</div>
 		</li>
-		<li class="list-group-item">${vo.content }</li>
-		<li class="list-group-item">${vo.writer }</li>
-		<li class="list-group-item"><fmt:formatDate value="${vo.writeDate }" pattern="yyyy-MM-dd"/></li>
+		<li class="list-group-item"><label>내용</label>${vo.content }</li>
+		<li class="list-group-item"><label>작성자</label>${vo.writer }</li>
+		<li class="list-group-item"><label>작성일</label><fmt:formatDate value="${vo.writeDate }" pattern="yyyy-MM-dd"/></li>
 	</ul>
 
 	<div>
