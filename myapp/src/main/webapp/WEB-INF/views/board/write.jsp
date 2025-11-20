@@ -4,6 +4,14 @@
 <head>
     <meta charset="UTF-8">
 	<h1>글쓰기</h1>
+
+<script>
+	$(function(){
+		$("#cancelBtn").click(function(){
+			history.back();
+		});
+	});
+</script>
 </head>
 <body>
 

@@ -103,7 +103,7 @@ public class BoardController {
 		log.info("게시판 글쓰기 처리 vo:"+ vo);
 		vo.setFileName(FileUtil.upload("/upload/image", vo.getImageFile(), request));
 		boardWriteService.service(vo);
-		
+		Thread.sleep(2000);
 		return "redirect:list.do?perPageNum="+perPageNum;
 	}
 	
@@ -123,6 +123,7 @@ public class BoardController {
 		vo.setFileName(FileUtil.upload("/upload/image", vo.getImageFile(), request));
 		boardFileService.service(vo);
 		FileUtil.remove(FileUtil.getRealPath("", vo.getDeleteName(), request));
+		Thread.sleep(2000);
 		
 		return "redirect:view.do?no=" + vo.getNo()
 		+ "&page=" + pageObject.getPage()
