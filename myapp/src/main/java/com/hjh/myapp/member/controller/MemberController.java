@@ -1,165 +1,56 @@
 package com.hjh.myapp.member.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.hjh.myapp.Service;
-import com.hjh.myapp.board.service.BoardDeleteService;
-import com.hjh.myapp.board.service.BoardFileService;
-import com.hjh.myapp.board.service.BoardViewService;
-import com.hjh.myapp.board.service.BoardWriteService;
-import com.hjh.myapp.board.vo.BoardVO;
-import com.hjh.myapp.util.file.FileUtil;
-import com.hjh.myapp.util.page.PageObject;
+import com.hjh.myapp.member.service.MemberService;
+import com.hjh.myapp.member.vo.LoginVO;
 
 
 @Controller
 @RequestMapping("/member")
 public class MemberController {
 
-    private final BoardDeleteService boardDeleteService_1;
-
-    private final BoardWriteService boardWriteService_1;
-
-    private final BoardViewService boardViewService_1;
-    
-    private final BoardFileService boardFileService_1;
+	@Qualifier("memberService")
+	private MemberService service;
 	
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 	
-	private Service boardListService;
-	private Service boardViewService;
-	private Service boardWriteService;
-	private Service boardUpdateService;
-	private Service boardDeleteService;
-	private Service boardFileService;
+	
+	
+	@GetMapping("/loginForm.do")
+	public String loginForm() throws Exception{
+		
+		log.info("로그인 폼");
+		
+		return "member/loginForm";
+	}
+	
+	@PostMapping("/login.do")
+	public String login(LoginVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
+		
+		log.info("로그인 vo:");
 
-    MemberController(BoardViewService boardViewService_1, BoardWriteService boardWriteService_1, BoardDeleteService boardDeleteService_1, BoardFileService boardFileService_1) {
-        this.boardViewService_1 = boardViewService_1;
-        this.boardWriteService_1 = boardWriteService_1;
-        this.boardDeleteService_1 = boardDeleteService_1;
-        this.boardFileService_1 = boardFileService_1;
-        
-    }
-	
-	@Autowired
-	public void setBoardListService(Service boardListService) {
-		this.boardListService = boardListService;
-	}
-	@Autowired
-	public void setBoardViewService(Service boardViewService) {
-		this.boardViewService = boardViewService;
-	}
-	@Autowired
-	public void setBoardWriteService(Service boardWriteService) {
-		this.boardWriteService = boardWriteService;
-	}
-	@Autowired
-	public void setBoardUpdateService(Service boardUpdateService) {
-		this.boardUpdateService = boardUpdateService;
-	}
-	@Autowired
-	public void setBoardDeleteService(Service boardDeleteService) {
-		this.boardDeleteService = boardDeleteService;
-	}
-	@Autowired
-	public void setBoardFileService(Service boardFileService) {
-		this.boardFileService = boardFileService;
-	}
-
-	@GetMapping("/list.do")
-	public String list(PageObject pageObject, Model model) throws Exception{
+		LoginVO loginVO = service.login(vo);
 		
-		log.info("게시판 리스트 처리");
+		if(loginVO == null) {
+			rttr.addFlashAttribute("msg","로그인을 다시 하세요.");
+			return "redirec:/member/loginForm.do";
+		}
 		
-		if(pageObject.getPerPageNum() == 10) pageObject.setPerPageNum(8);
+		session.setAttribute("login", loginVO);
+		rttr.addFlashAttribute("msg","로그인 되었습니다.");
 		
-		model.addAttribute("list", boardListService.service(pageObject));
-		model.addAttribute("pageObject", pageObject);
-		
-		return "board/list";
-	}
-
-	@GetMapping("/write.do")
-	public String writeForm() throws Exception{
-		
-		log.info("게시판 글쓰기 폼");
-		
-		return "board/write";
-	}
-	
-	@PostMapping("/write.do")
-	public String write(BoardVO vo, HttpSession session, HttpServletRequest request, int perPageNum) throws Exception{
-		
-		log.info("게시판 글쓰기 처리 vo:"+ vo);
-		vo.setFileName(FileUtil.upload("/upload/image", vo.getImageFile(), request));
-		boardWriteService.service(vo);
-		Thread.sleep(2000);
-		return "redirect:list.do?perPageNum="+perPageNum;
+		return "redirect:/";
 	}
 	
 	
-	@GetMapping("/view.do")
-	public String view(long no, Integer inc, Model model) throws Exception{
-		
-		log.info("게시판 글보기 no:" + no);
-		model.addAttribute("vo", boardViewService.service(new Object[]{no, inc}));
-		
-		return "board/view";
-	}
-	
-	@PostMapping("/imageChange.do")
-	public String imageChange(PageObject pageObject, BoardVO vo, HttpServletRequest request) throws Exception{
-		
-		vo.setFileName(FileUtil.upload("/upload/image", vo.getImageFile(), request));
-		boardFileService.service(vo);
-		FileUtil.remove(FileUtil.getRealPath("", vo.getDeleteName(), request));
-		Thread.sleep(2000);
-		
-		return "redirect:view.do?no=" + vo.getNo()
-		+ "&page=" + pageObject.getPage()
-		+ "&perPageNum=" + pageObject.getPerPageNum()
-		+ "&key=" + pageObject.getKey()
-		+ "&word=" + pageObject.getWord();
-	}
-	
-	@GetMapping("/update.do")
-	public String updateForm(long no, Model model) throws Exception{
-		
-		log.info("게시판 수정 폼 no:" + no);
-		model.addAttribute("vo", boardViewService.service(new Object[]{no, 0}));
-		return "board/update";
-	}
-	
-	@PostMapping("/update.do")
-	public String update(BoardVO vo, PageObject pageObject) throws Exception{
-		
-		log.info("게시판 수정 처리 vo="+ vo);
-		boardUpdateService.service(vo);
-		
-		return "redirect:view.do?no="+vo.getNo()
-		+"&page="+ pageObject.getPage()
-		+"&perPageNum="+ pageObject.getPerPageNum()
-		+"&key="+ pageObject.getKey()
-		+"&word="+ pageObject.getWord();
-	}
-	
-	@GetMapping("/delete.do")
-	public String delete(BoardVO vo, HttpServletRequest request, int perPageNum) throws Exception{
-		
-		log.info("게시판 글삭제 처리 no:" + vo);
-		boardDeleteService.service(vo.getNo());
-		FileUtil.remove(FileUtil.getRealPath("", vo.getDeleteName(), request));
-		
-		return "redirect:list.do?perPageNum="+ perPageNum;
-	}
 }
