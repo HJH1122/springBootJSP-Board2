@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.hjh.myapp.member.mapper.MemberMapper;
 import com.hjh.myapp.member.vo.LoginVO;
 
-@Service
+@Service("memberService")
 @Qualifier("memberServiceImpl")
 public class MemberServiceImpl implements MemberService{
 	
@@ -17,7 +17,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public LoginVO login(LoginVO vo) throws Exception {
 		
-		return mapper.Login(vo);
+		return mapper.login(vo);
 	}
 
 }

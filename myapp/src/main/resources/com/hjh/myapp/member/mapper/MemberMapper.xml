@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org/dtd/mybatis-3-mapper.dtd"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hjh.myapp.member.mapper.MemberMapper">
+
+	<select id="login" resultType="com.hjh.myapp.member.vo.LoginVO">
+		SELECT
+	        m.id,
+	        m.name,
+	        m.photo,
+	        m.new_msg_cnt AS newMsgCnt,
+	        m.grade_no AS gradeNo,
+	        g.grade_name AS gradeName
+	    FROM member m
+	    JOIN grade g
+	      ON m.grade_no = g.grade_no
+	    WHERE m.id = #{id}
+	      AND m.pw = #{pw}
+	</select>
+	
+	
+</mapper>

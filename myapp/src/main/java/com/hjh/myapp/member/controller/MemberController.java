@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import com.hjh.myapp.member.vo.LoginVO;
 @RequestMapping("/member")
 public class MemberController {
 
+	@Autowired
 	@Qualifier("memberService")
 	private MemberService service;
 	
@@ -43,7 +45,7 @@ public class MemberController {
 		
 		if(loginVO == null) {
 			rttr.addFlashAttribute("msg","로그인을 다시 하세요.");
-			return "redirec:/member/loginForm.do";
+			return "redirect:/member/loginForm.do";
 		}
 		
 		session.setAttribute("login", loginVO);

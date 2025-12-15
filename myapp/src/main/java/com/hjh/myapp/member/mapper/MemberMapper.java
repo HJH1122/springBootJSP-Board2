@@ -27,6 +27,6 @@ public interface MemberMapper {
 	
 	public int delete(long vo) throws Exception;
 	
-	public LoginVO Login(LoginVO vo) throws Exception;
+	public LoginVO login(LoginVO vo) throws Exception;
  
 }
