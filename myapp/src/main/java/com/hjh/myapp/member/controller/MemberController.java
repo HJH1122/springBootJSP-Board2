@@ -54,5 +54,16 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/logout.do")
+	public String logout(HttpSession session, RedirectAttributes rttr) throws Exception{
+		
+		log.info("로그아웃 vo:");
+
+		session.removeAttribute("login");
+		rttr.addFlashAttribute("msg","로그아웃 되었습니다.");
+		
+		return "redirect:/";
+	}
+	
 	
 }
