@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org/dtd/mybatis-3-mapper.dtd"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hjh.myapp.category.mapper.CategoryMapper">
+
+	<select id="list" resultType="com.hjh.myapp.category.vo.CategoryVO">
+		SELECT
+	        cate_code1, cate_code2, cate_name
+	    FROM category
+	    
+	    WHERE 
+	    	<if test="cate_code1 == 0">
+	    		cate_code2 = 0
+	    	</if>
+	    	<if test="cate_code1 > 0">
+	    		cate_code1 = #{cate_code1} AND cate_code2 != 0
+	    	</if>
+	    order by cate_code1, cate_code2
+	</select>
+	
+	<insert id="write">
+	
+	</insert>
+	
+	
+</mapper>

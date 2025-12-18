@@ -1,0 +1,32 @@
+package com.hjh.myapp.category.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.hjh.myapp.board.vo.BoardVO;
+import com.hjh.myapp.member.vo.LoginVO;
+import com.hjh.myapp.util.page.PageObject;
+
+@Mapper
+public interface CategoryMapper {
+	
+	public List<BoardVO> list(PageObject pageObject) throws Exception;
+	
+	public long getTotalRow(PageObject pageObject) throws Exception;
+	
+	public int increase(long no) throws Exception;
+	
+	public BoardVO view(long no) throws Exception;
+	
+	public int imageChange(BoardVO vo) throws Exception;
+	
+	public int write(BoardVO vo) throws Exception;
+	
+	public int update(BoardVO vo) throws Exception;
+	
+	public int delete(long vo) throws Exception;
+	
+	public LoginVO login(LoginVO vo) throws Exception;
+ 
+}
