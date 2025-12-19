@@ -19,9 +19,41 @@
 	    order by cate_code1, cate_code2
 	</select>
 	
-	<insert id="write">
-	
+	<insert id="writeBig">
+		INSERT INTO category (cate_code1, cate_name)
+	    VALUES (
+	        (SELECT IFNULL(MAX(cate_code1), 0) + 1 FROM category),
+	        #{cate_name}
+	    )
 	</insert>
+	
+	<insert id="writeMid">
+		INSERT INTO category (cate_code1, cate_code2, cate_name)
+		VALUES (
+		    #{cate_code1},
+		    (
+		        SELECT IFNULL(MAX(cate_code2), 0) + 1 
+		        FROM category 
+		        WHERE cate_code1 = #{cate_code1}
+		    ),
+		    #{cate_name}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE category
+		SET 
+			title = #{title},
+			content = #{content},
+			writer = #{writer}
+		WHERE no = #{no} and pw = #{pw}
+		
+	</update>
+	
+	<delete id="delete">
+		DELETE from category
+		WHERE no = #{no} and pw = #{pw}
+	</delete>
 	
 	
 </mapper>
