@@ -10,6 +10,7 @@
 		<pattern>/message/*</pattern>
 		<pattern>/member/*</pattern>
 		<pattern>/grade/*</pattern>
+		<pattern>/goods/*</pattern>
 	</decorator>
 	<!-- <decorator name="admin" page="admin_decorator.jsp"> -->
 	<!-- <pattern>/admin/*</pattern> -->

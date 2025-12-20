@@ -1,20 +1,19 @@
 package com.hjh.myapp.category.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JacksonInject;
-import com.hjh.myapp.Service;
-import com.hjh.myapp.board.controller.BoardController;
-import com.hjh.myapp.board.mapper.BoardMapper;
-import com.hjh.myapp.member.vo.LoginVO;
-import com.hjh.myapp.util.page.PageObject;
+import com.hjh.myapp.category.vo.CategoryVO;
 
 
 @org.springframework.stereotype.Service
 public interface CategoryService {
 
+	public List<CategoryVO> list(Integer cate_code1) throws Exception;
 
-	public LoginVO login(LoginVO vo) throws Exception;
+	public Integer write(CategoryVO vo) throws Exception;
+
+	public Integer update(CategoryVO vo) throws Exception;
+
+	public Integer delete(CategoryVO vo) throws Exception;
+
 }

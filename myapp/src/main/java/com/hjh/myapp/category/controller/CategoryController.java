@@ -1,18 +1,25 @@
 package com.hjh.myapp.category.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hjh.myapp.category.service.CategoryService;
+import com.hjh.myapp.category.vo.CategoryVO;
 import com.hjh.myapp.member.service.MemberService;
 import com.hjh.myapp.member.vo.LoginVO;
 
@@ -29,30 +36,35 @@ public class CategoryController {
 	
 	
 	
-	@GetMapping("/loginForm.do")
-	public String loginForm() throws Exception{
+	@GetMapping("/list.do")
+	public String list(@RequestParam(defaultValue = "0") Integer cate_code1, Model model) throws Exception{
 		
-		log.info("로그인 폼");
+		log.info("카테고리 리스트");
 		
-		return "member/loginForm";
-	}
-	
-	@PostMapping("/login.do")
-	public String login(LoginVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
+		List<CategoryVO> bigList = service.list(0);
 		
-		log.info("로그인 vo:");
-
-		LoginVO loginVO = service.login(vo);
-		
-		if(loginVO == null) {
-			rttr.addFlashAttribute("msg","로그인을 다시 하세요.");
-			return "redirect:/member/loginForm.do";
+		if(cate_code1 == 0 && (bigList != null && bigList.size() != 0)) {
+			cate_code1 = bigList.get(0).getCate_code1();
 		}
 		
-		session.setAttribute("login", loginVO);
+		List<CategoryVO> midList = service.list(cate_code1);
+		
+		model.addAttribute("bigList", bigList);
+		model.addAttribute("midList", midList);
+		return "category/list";
+	}
+	
+	@PostMapping("/write.do")
+	public String write(LoginVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
+		
+		log.info("write vo:");
+
+		
+		
+		
 		rttr.addFlashAttribute("msg","로그인 되었습니다.");
 		
-		return "redirect:/";
+		return "redirect:list.do";
 	}
 	
 	@GetMapping("/logout.do")

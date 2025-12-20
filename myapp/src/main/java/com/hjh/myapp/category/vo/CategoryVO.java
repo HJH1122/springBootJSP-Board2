@@ -5,14 +5,8 @@ import lombok.Data;
 @Data
 public class CategoryVO {
 	
-	private String id;
-	private String pw;
-	private String name;
-	private String photo;
-	private Long newMsgCnt;
-	private Integer gradeNo;
-	
-	//grade테이블
-	private String gradeName; 
+	private Integer cate_code1;
+	private Integer cate_code2;
+	private String cate_name;
 
 }
