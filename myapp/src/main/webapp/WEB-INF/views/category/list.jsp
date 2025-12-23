@@ -34,6 +34,12 @@
 			
 			$("#bigWriteBtn").click(function(){
 				
+				$("#categoryModal").find(".modal-title").text("대분류 등록");
+				$("#modalCate_code1").val(0);
+				$("#modalCate_code2").val(0);
+				
+				$("#modalForm").attr("action", "write.do");
+				
 				$("#categoryModal").modal("show");
 				return false;
 			});
@@ -114,7 +120,7 @@
 		<input name="cate_code2" value="0" type="hidden" id="modalCate_code2">
 	      <!-- Modal body -->
 	      <div class="modal-body">
-	        <input name="content" class="form-control" id="modalContent">
+	        <input name="cate_name" class="form-control" id="modalCate_name">
 	      </div>
 	
 	      <!-- Modal footer -->

@@ -55,14 +55,14 @@ public class CategoryController {
 	}
 	
 	@PostMapping("/write.do")
-	public String write(LoginVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
+	public String write(CategoryVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
 		
 		log.info("write vo:");
 
 		
+		service.write(vo);
 		
-		
-		rttr.addFlashAttribute("msg","로그인 되었습니다.");
+		rttr.addFlashAttribute("msg","카테고리 등록되었습니다.");
 		
 		return "redirect:list.do";
 	}
