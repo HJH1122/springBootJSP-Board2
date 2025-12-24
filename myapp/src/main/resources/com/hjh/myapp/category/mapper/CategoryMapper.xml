@@ -20,24 +20,28 @@
 	</select>
 	
 	<insert id="writeBig">
-		INSERT INTO category (cate_code1, cate_name)
-	    VALUES (
-	        (SELECT IFNULL(MAX(cate_code1), 0) + 1 FROM category),
+	    INSERT INTO category (cate_code1, cate_code2, cate_name)
+	    SELECT
+	        IFNULL(MAX(cate_code1), 0) + 1,
+	        0,
 	        #{cate_name}
-	    )
+	    FROM (
+	        SELECT cate_code1
+	        FROM category
+	    ) t
 	</insert>
 	
 	<insert id="writeMid">
-		INSERT INTO category (cate_code1, cate_code2, cate_name)
-		VALUES (
-		    #{cate_code1},
-		    (
-		        SELECT IFNULL(MAX(cate_code2), 0) + 1 
-		        FROM category 
-		        WHERE cate_code1 = #{cate_code1}
-		    ),
-		    #{cate_name}
-		)
+	    INSERT INTO category (cate_code1, cate_code2, cate_name)
+	    SELECT
+	        #{cate_code1},
+	        IFNULL(MAX(cate_code2), 0) + 1,
+	        #{cate_name}
+	    FROM (
+	        SELECT cate_code2
+	        FROM category
+	        WHERE cate_code1 = #{cate_code1}
+	    ) t
 	</insert>
 	
 	<update id="update">

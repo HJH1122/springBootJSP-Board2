@@ -51,6 +51,8 @@ public class CategoryController {
 		
 		model.addAttribute("bigList", bigList);
 		model.addAttribute("midList", midList);
+		
+		model.addAttribute("cate_code1", cate_code1);
 		return "category/list";
 	}
 	
@@ -64,7 +66,7 @@ public class CategoryController {
 		
 		rttr.addFlashAttribute("msg","카테고리 등록되었습니다.");
 		
-		return "redirect:list.do";
+		return "redirect:list.do?cate_code1=" + vo.getCate_code1();
 	}
 	
 	@GetMapping("/logout.do")

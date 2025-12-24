@@ -34,15 +34,25 @@
 			
 			$("#bigWriteBtn").click(function(){
 				
-				$("#categoryModal").find(".modal-title").text("대분류 등록");
-				$("#modalCate_code1").val(0);
-				$("#modalCate_code2").val(0);
-				
-				$("#modalForm").attr("action", "write.do");
-				
-				$("#categoryModal").modal("show");
+				categoryProcess("대분류 추가", 0, 0, "write.do");
 				return false;
 			});
+			
+			$("#midWriteBtn").click(function(){
+				
+				categoryProcess("중분류 추가", ${cate_code1}, 0, "write.do");
+				return false;
+			});
+			
+			function categoryProcess(title, cate_code1, cate_code2, url){
+				$("#categoryModal").find(".modal-title").text(title);
+				$("#modalCate_code1").val(cate_code1);
+				$("#modalCate_code2").val(cate_code2);
+				
+				$("#modalForm").attr("action", url);
+				
+				$("#categoryModal").modal("show");
+			}
 			
 		});
 		
@@ -81,7 +91,7 @@
 			    <div id="mid_category" class="container tab-pane active"><br>
 			      <h3>
 			      	카테고리 - 중분류
-			      	<button class="btn btn-primary btn-sm">add</button>
+			      	<button class="btn btn-primary btn-sm" id="midWriteBtn" data-cate_code1="${cate_code1 }">add</button>
 			      </h3>
 			      <ul>
 			      	<c:forEach items="${midList }" var="vo">
