@@ -8,13 +8,19 @@
     <meta charset="UTF-8">
 	<h1>카테고리 관리</h1>
 	
+	<style>
+		.editDiv{
+			display: none;
+		}
+	</style>
+	
 	<!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap JS (옵션: 툴팁, 모달 등을 위한 JS) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script type="text/javascript">
 		
@@ -28,28 +34,30 @@
 			});
 			
 			$(".cate_edit").click(function(){
-				alert("수정");
+				$(".editDiv").hide();
+				$(this).next(".editDiv").slideDown();
+				
 				return false;
 			});
 			
 			$("#bigWriteBtn").click(function(){
 				
-				categoryProcess("대분류 추가", 0, 0, "write.do");
-				return false;
+				return categoryProcess("대분류 추가", 0, 0, "write.do", "추가");
 			});
 			
 			$("#midWriteBtn").click(function(){
 				
-				categoryProcess("중분류 추가", ${cate_code1}, 0, "write.do");
-				return false;
+				return categoryProcess("중분류 추가", ${cate_code1}, 0, "write.do", "추가");
 			});
 			
-			function categoryProcess(title, cate_code1, cate_code2, url){
+			function categoryProcess(title, cate_code1, cate_code2, url, btnName){
 				$("#categoryModal").find(".modal-title").text(title);
 				$("#modalCate_code1").val(cate_code1);
 				$("#modalCate_code2").val(cate_code2);
 				
 				$("#modalForm").attr("action", url);
+				
+				$("submitBtn").text(btnName);
 				
 				$("#categoryModal").modal("show");
 			}
@@ -75,6 +83,11 @@
 			      <a class="nav-link bigCateData ${(vo.cate_code1 == param.cate_code1) ? 'active' : ''}" data-toggle="tab" href="#mid_category" data-cate_code1="${vo.cate_code1 }">
 			      	<span class="cate_name">${vo.cate_name }</span> 
 			      <i class="fa fa-edit cate_edit"></i>
+				      <div class="editDiv">
+					      <button class="btn btn-success btn-sm">수정</button>
+					      <br>
+					      <button class="btn btn-danger btn-sm">삭제</button>
+				      </div>
 			      </a>
 			    </li>
 			  </c:forEach>
@@ -135,7 +148,7 @@
 	
 	      <!-- Modal footer -->
 	      <div class="modal-footer">
-	      	<button class="btn btn-primary">전송</button>
+	      	<button class="btn btn-primary" id="submitBtn">전송</button>
 	        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 	      </div>
       
