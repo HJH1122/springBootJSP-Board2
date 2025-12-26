@@ -42,18 +42,38 @@
 			
 			$("#bigWriteBtn").click(function(){
 				
-				return categoryProcess("대분류 추가", 0, 0, "write.do", "추가");
+				return categoryProcess("대분류 추가", 0, 0, "", "write.do", "추가");
 			});
-			
+			//중분류 추가버튼
 			$("#midWriteBtn").click(function(){
 				
-				return categoryProcess("중분류 추가", ${cate_code1}, 0, "write.do", "추가");
+				return categoryProcess("중분류 추가", ${cate_code1}, 0, "", "write.do", "추가");
+			});
+			//대분류 수정버튼
+			$(".bigUpdateBtn").click(function(){
+				
+				let cate_code1 = $(this).closest("a").data("cate_code1");
+				let cate_name = $(this).closest("a").find(".cate_name").text();
+
+				return categoryProcess("대분류 수정", cate_code1, 0, cate_name,"update.do", "수정");
+				
+			});
+			//중분류 수정버튼
+			$(".midUpdateBtn").click(function(){
+				
+				let cate_code1 = $(this).closest("li").data("cate_code1");
+				let cate_code2 = $(this).closest("li").data("cate_code2");
+				let cate_name = $(this).closest("li").find(".cate_name").text();
+
+				return categoryProcess("중분류 수정", cate_code1, cate_code2, cate_name,"update.do", "수정");
+				
 			});
 			
-			function categoryProcess(title, cate_code1, cate_code2, url, btnName){
+			function categoryProcess(title, cate_code1, cate_code2, cate_name, url, btnName){
 				$("#categoryModal").find(".modal-title").text(title);
 				$("#modalCate_code1").val(cate_code1);
 				$("#modalCate_code2").val(cate_code2);
+				$("#modalCate_name").val(cate_name);
 				
 				$("#modalForm").attr("action", url);
 				
@@ -84,9 +104,9 @@
 			      	<span class="cate_name">${vo.cate_name }</span> 
 			      <i class="fa fa-edit cate_edit"></i>
 				      <div class="editDiv">
-					      <button class="btn btn-success btn-sm">수정</button>
+					      <button class="btn btn-success btn-sm bigUpdateBtn">수정</button>
 					      <br>
-					      <button class="btn btn-danger btn-sm">삭제</button>
+					      <button class="btn btn-danger btn-sm bigDeleteBtn">삭제</button>
 				      </div>
 			      </a>
 			    </li>
@@ -108,11 +128,11 @@
 			      </h3>
 			      <ul>
 			      	<c:forEach items="${midList }" var="vo">
-				      	<li class="list-group-item">
-				      		${vo.cate_name }
+				      	<li class="list-group-item" data-cate_code1="${vo.cate_code1 }" data-cate_code2="${vo.cate_code2 }">
+				      		<span class="cate_name">${vo.cate_name }</span> 
 				      		<span class="pull-right">
-				      			<button class="btn btn-success btn-sm">수정</button>
-				      			<button class="btn btn-danger btn-sm">삭제</button>
+				      			<button class="btn btn-success btn-sm midUpdateBtn">수정</button>
+				      			<button class="btn btn-danger btn-sm midDeleteBtn">삭제</button>
 				      		</span>
 				      	</li>
 			      	</c:forEach>

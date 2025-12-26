@@ -47,10 +47,8 @@
 	<update id="update">
 		UPDATE category
 		SET 
-			title = #{title},
-			content = #{content},
-			writer = #{writer}
-		WHERE no = #{no} and pw = #{pw}
+			cate_name = #{cate_name}
+		WHERE cate_code1 = #{cate_code1} and cate_code2 = #{cate_code2}
 		
 	</update>
 	
