@@ -69,6 +69,26 @@
 				
 			});
 			
+			//대분류 삭제버튼
+			$(".bigDeleteBtn").click(function(){
+				
+				let cate_code1 = $(this).closest("a").data("cate_code1");
+				let cate_name = $(this).closest("a").find(".cate_name").text();
+
+				return categoryProcess("대분류 삭제", cate_code1, 0, cate_name,"delete.do", "삭제");
+				
+			});
+			//중분류 삭제버튼
+			$(".midDeleteBtn").click(function(){
+				
+				let cate_code1 = $(this).closest("li").data("cate_code1");
+				let cate_code2 = $(this).closest("li").data("cate_code2");
+				let cate_name = $(this).closest("li").find(".cate_name").text();
+
+				return categoryProcess("중분류 삭제", cate_code1, cate_code2, cate_name,"delete.do", "삭제");
+			
+			});
+			
 			function categoryProcess(title, cate_code1, cate_code2, cate_name, url, btnName){
 				$("#categoryModal").find(".modal-title").text(title);
 				$("#modalCate_code1").val(cate_code1);
@@ -77,7 +97,7 @@
 				
 				$("#modalForm").attr("action", url);
 				
-				$("submitBtn").text(btnName);
+				$("#submitBtn").text(btnName);
 				
 				$("#categoryModal").modal("show");
 			}

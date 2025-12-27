@@ -54,7 +54,12 @@
 	
 	<delete id="delete">
 		DELETE from category
-		WHERE no = #{no} and pw = #{pw}
+		WHERE 
+			cate_code1 = #{cate_code1}
+		
+		<if test="cate_code2 != 0">
+	    	and cate_code2 = #{cate_code2}
+	    </if>
 	</delete>
 	
 	

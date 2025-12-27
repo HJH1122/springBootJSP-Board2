@@ -85,5 +85,21 @@ public class CategoryController {
 		return "redirect:list.do?cate_code1=" + vo.getCate_code1();
 	}
 	
+	@PostMapping("/delete.do")
+	public String delete(CategoryVO vo, RedirectAttributes rttr) throws Exception{
+		
+		log.info("카테고리 삭제 :");
+
+		if(service.delete(vo) >= 1){
+			
+			rttr.addFlashAttribute("msg","카테고리가 삭제되었습니다.");
+		}
+		else {
+			rttr.addFlashAttribute("msg","카테고리가 삭제되지 않았습니다.");
+		}
+		return "redirect:list.do" + ((vo.getCate_code2() > 0) ? ("?cate_code1=" + vo.getCate_code1()) : "");
+		
+	}
+	
 	
 }
