@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org/dtd/mybatis-3-mapper.dtd"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hjh.myapp.goods.mapper.GoodsMapper">
+
+	<select id="list" resultType="com.hjh.myapp.goods.vo.GoodsVO">
+		SELECT
+	        cate_code1, cate_code2, cate_name
+	    FROM category
+	    
+	    WHERE 
+	    	<if test="cate_code1 == 0">
+	    		cate_code2 = 0
+	    	</if>
+	    	<if test="cate_code1 > 0">
+	    		cate_code1 = #{cate_code1} AND cate_code2 != 0
+	    	</if>
+	    order by cate_code1, cate_code2
+	</select>
+	
+	<insert id="writeBig">
+	    INSERT INTO category (cate_code1, cate_code2, cate_name)
+	    SELECT
+	        IFNULL(MAX(cate_code1), 0) + 1,
+	        0,
+	        #{cate_name}
+	    FROM (
+	        SELECT cate_code1
+	        FROM category
+	    ) t
+	</insert>
+	
+	<insert id="writeMid">
+	    INSERT INTO category (cate_code1, cate_code2, cate_name)
+	    SELECT
+	        #{cate_code1},
+	        IFNULL(MAX(cate_code2), 0) + 1,
+	        #{cate_name}
+	    FROM (
+	        SELECT cate_code2
+	        FROM category
+	        WHERE cate_code1 = #{cate_code1}
+	    ) t
+	</insert>
+	
+	<update id="update">
+		UPDATE category
+		SET 
+			cate_name = #{cate_name}
+		WHERE cate_code1 = #{cate_code1} and cate_code2 = #{cate_code2}
+		
+	</update>
+	
+	<delete id="delete">
+		DELETE from category
+		WHERE 
+			cate_code1 = #{cate_code1}
+		
+		<if test="cate_code2 != 0">
+	    	and cate_code2 = #{cate_code2}
+	    </if>
+	</delete>
+	
+	
+</mapper>
