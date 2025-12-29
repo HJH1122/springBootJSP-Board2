@@ -1,4 +1,4 @@
-package com.hjh.myapp.goods.vo.copy;
+package com.hjh.myapp.goods.vo;
 
 import java.util.Date;
 

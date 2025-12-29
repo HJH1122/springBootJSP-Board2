@@ -1,4 +1,4 @@
-package com.hjh.myapp.goods.vo.copy;
+package com.hjh.myapp.goods.vo;
 
 import java.util.Date;
 
@@ -20,7 +20,7 @@ public class GoodsVO {
 	private Long price;
 	private Long discount;
 	private Integer discount_rate;
-	private Long delivery_charge;
+	private Integer delivery_charge;
 	private Integer save_rate;
 	private Date sale_startDate;
 	private Date sale_endDate;
