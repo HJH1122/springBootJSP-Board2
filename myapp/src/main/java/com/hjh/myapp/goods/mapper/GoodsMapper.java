@@ -14,7 +14,7 @@ public interface GoodsMapper {
 
 	public List<GoodsVO> list(PageObject pageObject) throws Exception;
 	
-	public Long getTotalRow(PageObject pageObject);
+	public Integer getTotalRow(PageObject pageObject);
 	
 	public Integer increase(Long no);
 

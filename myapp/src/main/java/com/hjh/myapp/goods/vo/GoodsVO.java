@@ -17,11 +17,18 @@ public class GoodsVO {
 	private Date product_date;
 	private String image_name;
 	private Long hit;
-	private Long price;
-	private Long discount;
+	private Integer price;
+	private Integer discount;
 	private Integer discount_rate;
 	private Integer delivery_charge;
-	private Integer save_rate;
+	private Integer saved_rate;
 	private Date sale_startDate;
 	private Date sale_endDate;
+	
+	public Integer getSale_price() {
+		if(discount != 0) {
+			return price - discount;
+		}
+		return (price - (price * discount_rate / 100)) / 10 * 10;
+	}
 }

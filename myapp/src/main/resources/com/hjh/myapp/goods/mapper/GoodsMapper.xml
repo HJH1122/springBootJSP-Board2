@@ -6,17 +6,25 @@
 
 	<select id="list" resultType="com.hjh.myapp.goods.vo.GoodsVO">
 		SELECT
-	        cate_code1, cate_code2, cate_name
-	    FROM category
-	    
-	    WHERE 
-	    	<if test="cate_code1 == 0">
-	    		cate_code2 = 0
-	    	</if>
-	    	<if test="cate_code1 > 0">
-	    		cate_code1 = #{cate_code1} AND cate_code2 != 0
-	    	</if>
-	    order by cate_code1, cate_code2
+		    g.goods_no,
+		    g.goods_name,
+		    p.price,
+		    p.discount,
+		    p.discount_rate,
+		    g.hit,
+		    g.image_name
+		FROM goods g
+		LEFT JOIN price p
+		    ON g.goods_no = p.goods_no
+		    AND p.sale_startDate <![CDATA[ <= ]]> CURDATE()
+		    AND CURDATE() <![CDATA[ <= ]]> p.sale_endDate
+		ORDER BY g.goods_no DESC
+		LIMIT #{perPageNum} OFFSET #{limit}
+	</select>
+	
+	<select id="getTotalRow" parameterType="com.hjh.myapp.util.page.PageObject" resultType="int">
+	    SELECT COUNT(*)
+	    FROM goods
 	</select>
 	
 	<insert id="writeBig">
