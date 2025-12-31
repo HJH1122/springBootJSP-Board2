@@ -23,13 +23,15 @@ public class AuthorityInterceptor implements HandlerInterceptor {
 	private Map<String, Integer> authMap = new HashMap<>();
 	
 	{
-		authMap.put("/goods/writeForm.do", 9);
-		authMap.put("/goods/write.do", 9);
-		authMap.put("/goods/updateForm.do", 9);
-		authMap.put("/goods/update.do", 9);
-		authMap.put("/goods/delete.do", 9);
-		authMap.put("/goods/changeImage.do", 9);
-		
+//		authMap.put("/goods/writeForm.do", 9);
+//		authMap.put("/goods/write.do", 9);
+//		authMap.put("/goods/updateForm.do", 9);
+//		authMap.put("/goods/update.do", 9);
+//		authMap.put("/goods/delete.do", 9);
+//		authMap.put("/goods/changeImage.do", 9);
+//		authMap.put("/goods/addSize.do", 9);
+//		authMap.put("/goods/addColor.do", 9);
+//		authMap.put("/goods/changePrice.do", 9);
 		
 		authMap.put("/member/logout.do", 1);
 		

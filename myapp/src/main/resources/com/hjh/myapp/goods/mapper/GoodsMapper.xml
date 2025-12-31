@@ -18,6 +18,9 @@
 		    ON g.goods_no = p.goods_no
 		    AND p.sale_startDate <![CDATA[ <= ]]> CURDATE()
 		    AND CURDATE() <![CDATA[ <= ]]> p.sale_endDate
+		WHERE
+			1 = 1
+			<include refid="search" />
 		ORDER BY g.goods_no DESC
 		LIMIT #{perPageNum} OFFSET #{limit}
 	</select>
@@ -25,21 +28,35 @@
 	<select id="getTotalRow" parameterType="com.hjh.myapp.util.page.PageObject" resultType="int">
 	    SELECT COUNT(*)
 	    FROM goods
+	    WHERE 1 = 1
+	    	<include refid="search" />
+	    
 	</select>
 	
-	<insert id="writeBig">
-	    INSERT INTO category (cate_code1, cate_code2, cate_name)
-	    SELECT
-	        IFNULL(MAX(cate_code1), 0) + 1,
-	        0,
-	        #{cate_name}
-	    FROM (
-	        SELECT cate_code1
-	        FROM category
-	    ) t
+	<sql id="search">
+	
+	</sql>
+	
+	<update id="increase">
+		update goods
+		set hit = hit + 1
+		where no = #{no}
+	</update>
+	
+	<insert id="view">
+	    select 
+	    	no,
+	    	title,
+	    	content,
+	    	writer,
+	    	write_date AS writeDate,
+	    	hit
+	    	
+	    from goods
+	    where no = #{no}
 	</insert>
 	
-	<insert id="writeMid">
+	<insert id="write">
 	    INSERT INTO category (cate_code1, cate_code2, cate_name)
 	    SELECT
 	        #{cate_code1},
@@ -53,22 +70,40 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE category
+		UPDATE goods
 		SET 
-			cate_name = #{cate_name}
-		WHERE cate_code1 = #{cate_code1} and cate_code2 = #{cate_code2}
+			title = #{title},
+			content = #{content},
+			writer = #{writer}
+		WHERE no = #{no} and pw = #{pw}
 		
 	</update>
 	
 	<delete id="delete">
-		DELETE from category
+		DELETE from goods
 		WHERE 
-			cate_code1 = #{cate_code1}
-		
-		<if test="cate_code2 != 0">
-	    	and cate_code2 = #{cate_code2}
-	    </if>
+			no = #{no}
+		AND
+			pw = #{pw}
+
 	</delete>
+	
+	<select id="getCategory" parameterType="com.hjh.myapp.goods.vo.CategoryVO">
+	    SELECT 
+	    	cate_code1, cate_code2, cate_name
+	    FROM category
+	    WHERE
+	    	<if test="cate_code1 = 0">
+	    		cate_code2 = 0
+	    	</if>
+	    	<if test="cate_code1 != 0">
+	    	    cate_code1 = #{cate_code1} and cate_code2 != 0
+	    	</if>
+	    
+	    	
+	    
+	</select>
+	
 	
 	
 </mapper>

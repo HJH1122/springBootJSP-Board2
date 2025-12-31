@@ -65,8 +65,14 @@ public class GoodsController {
 		return "goods/view";
 	}
 	
+	@GetMapping("/writeForm.do")
+	public String writeForm(Model model) throws Exception{
+		
+		return "goods/writeForm";
+	}
+	
 	@PostMapping("/write.do")
-	public String write(GoodsVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
+	public String write(GoodsVO vo, RedirectAttributes rttr) throws Exception{
 		
 		log.info("write vo:");
 

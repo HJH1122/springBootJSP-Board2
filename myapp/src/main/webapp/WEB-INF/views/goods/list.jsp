@@ -14,7 +14,7 @@
 		cursor: pointer;
 	}
 	.imageDiv{
-		background: block;
+		background: black;
 		
 	}
 	.title{
@@ -39,12 +39,12 @@ $(function(){
 	
 	$(".title").height(maxTitleHeight);
 	
-	let imgWidth = $(".imageDic:first").width();
-	let imgHeight = $(".imageDic:first").height();
+	let imgWidth = $(".imageDiv:first").width();
+	let imgHeight = $(".imageDiv:first").height();
 	let height = imgWidth / 5 * 4;
 	
-	$(".imgDiv").height(height);
-	$(".imgDiv > img").each(function(idx, image){
+	$(".imageDiv").height(height);
+	$(".imageDiv > img").each(function(idx, image){
 		if($(image).height() > height){
 			let image_width = $(image).width();
 			let image_height = $(image).height();
@@ -77,6 +77,7 @@ $(function(){
 	 <form action="list.do" id="searchForm">
 	 	<input name="page" value="1" type="hidden">
 			<div class="row">
+			  <div class="col-md-8">
 			 	<div class="input-group mb-3">
 			 		<div class="input-group-prepend">
 				 		<select class="form-control" name="key" id="key">
@@ -94,6 +95,7 @@ $(function(){
 				 	</div>
 			 	</div>
 			 </div>
+			
 			 
 			 <div class="col-md-4">
 			 	<div style="width: 200px;" class="float-right">
@@ -110,6 +112,7 @@ $(function(){
 			 		</div>
 			 	</div>
 			 </div>
+			</div>
 	</form>
 	<c:if test="${empty list }">
 		<div class="jumbotron">
@@ -120,7 +123,7 @@ $(function(){
 	<c:if test="${!empty list }">
 		 <div class="row">
 		 <c:forEach items="${list }" var="vo" varStatus="vs">
-		 	<c:if test="${(vs.index % 4 == 0) && (vs.index != 0) }">
+		 	<c:if test="${(vs.index % 3 == 0) && (vs.index != 0) }">
 			  		${"</div>"}
 			  		${"<div class='row'>"}
 			</c:if>
@@ -160,6 +163,9 @@ $(function(){
 		  	<pageNav:pageNav listURI="list.do" pageObject="${pageObject }"/>
 		  </div>
 	</c:if>
+    <%-- <c:if test="${!empty login && login.gradeNo == 9 }"> --%>
+		<a href="writeForm.do?perPageNum=${pageObject.perPageNum }" class="btn btn-primary">등록</a>
+	<%-- </c:if> --%>
 </div>
 </body>
 </html>
