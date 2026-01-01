@@ -35,6 +35,10 @@ public class GoodsController {
 	@Qualifier("goodsService")
 	private GoodsService service;
 	
+	@Autowired
+	@Qualifier("categoryService")
+	private CategoryService categoryService;
+	
 	private static final Logger log = LoggerFactory.getLogger(GoodsController.class);
 	
 	
@@ -68,8 +72,11 @@ public class GoodsController {
 	@GetMapping("/writeForm.do")
 	public String writeForm(Model model) throws Exception{
 		
+		//대분류 가져와서 JSP에 넘기기
+		model.addAttribute("bigList", categoryService.list(0));
 		return "goods/writeForm";
 	}
+
 	
 	@PostMapping("/write.do")
 	public String write(GoodsVO vo, RedirectAttributes rttr) throws Exception{

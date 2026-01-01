@@ -2,6 +2,8 @@ package com.hjh.myapp.goods.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -14,6 +16,7 @@ public class GoodsVO {
 	private String detail_image_name;
 	private String content;
 	private String company;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date product_date;
 	private String image_name;
 	private Long hit;

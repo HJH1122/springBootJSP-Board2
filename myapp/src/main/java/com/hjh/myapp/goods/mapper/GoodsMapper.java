@@ -26,6 +26,5 @@ public interface GoodsMapper {
 
 	public Integer delete(GoodsVO vo) throws Exception;
 
-	public List<CategoryVO> getCategory(@Param("cate_code1") Integer cate_code1);
 
 }

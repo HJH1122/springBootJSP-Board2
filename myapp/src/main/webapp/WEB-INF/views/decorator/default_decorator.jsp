@@ -19,9 +19,10 @@
 <!-- CDN 방식의 Google Icon 라이브러리 등록 -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<!-- jQuery UI 라이브러리 CDN 방식으로 등록 : datepicker나  -->
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.14.1/i18n/jquery-ui-i18n.js"></script>
 
 <style type="text/css">
 header, footer {
@@ -74,6 +75,17 @@ article {
 	$(document).ready(function() {
 		$('[data-toggle="tooltip"]').tooltip();
 	});
+	
+	$(function(){
+		$(".datepicker").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "yy-mm-dd",
+			dayNameMin: ["일","월","화","수","목","금","토"],
+			monthNamesShort: ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
+		});
+	});
+		
 </script>
 <decorator:head/>
 </head>
@@ -93,7 +105,7 @@ article {
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav">
 						<li><a href="/notice/list.do">공지사항</a></li>
-						<li><a href="/image/list.do">이미지</a></li>
+						<li><a href="/goods/list.do">상품관리</a></li>
 						<li><a href="/board/list.do">게시판</a></li>
 						<li><a href="/qna/list.do">질문답변</a></li>
 						<c:if test="${!empty login }">

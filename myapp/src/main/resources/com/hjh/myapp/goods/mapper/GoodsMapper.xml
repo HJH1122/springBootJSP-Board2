@@ -88,22 +88,6 @@
 
 	</delete>
 	
-	<select id="getCategory" parameterType="com.hjh.myapp.goods.vo.CategoryVO">
-	    SELECT 
-	    	cate_code1, cate_code2, cate_name
-	    FROM category
-	    WHERE
-	    	<if test="cate_code1 = 0">
-	    		cate_code2 = 0
-	    	</if>
-	    	<if test="cate_code1 != 0">
-	    	    cate_code1 = #{cate_code1} and cate_code2 != 0
-	    	</if>
-	    
-	    	
-	    
-	</select>
-	
 	
 	
 </mapper>

@@ -20,5 +20,4 @@ public interface GoodsService {
 
 	public Integer delete(GoodsVO vo) throws Exception;
 
-	public List<CategoryVO> getCategory(Integer cate_code1) throws Exception;
 }

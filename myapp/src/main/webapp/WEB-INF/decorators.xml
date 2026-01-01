@@ -9,6 +9,7 @@
 		<pattern>/qna/*</pattern>
 		<pattern>/message/*</pattern>
 		<pattern>/member/*</pattern>
+		<pattern>/category/*</pattern>
 		<pattern>/grade/*</pattern>
 		<pattern>/goods/*</pattern>
 	</decorator>

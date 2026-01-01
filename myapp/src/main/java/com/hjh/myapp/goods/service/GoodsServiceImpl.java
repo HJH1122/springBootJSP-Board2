@@ -61,12 +61,6 @@ public class GoodsServiceImpl implements GoodsService{
 		return mapper.delete(vo);
 	}
 
-	@Override
-	public List<CategoryVO> getCategory(Integer cate_code1) throws Exception {
-		
-		return mapper.getCategory(cate_code1);
-	}
-
 
 
 }
