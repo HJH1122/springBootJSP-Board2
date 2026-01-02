@@ -70,6 +70,17 @@ article {
 	color: grey;
 	margin: 0 auto;
 }
+
+fieldset {
+    border: 1px solid #ddd !important;
+    padding: 20px;
+}
+
+legend {
+    width: auto;
+    padding: 0 10px;
+    border-bottom: none;
+}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
