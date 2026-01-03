@@ -31,14 +31,32 @@ $(function(){
 		$("#sale_startDate").datepicker("option", "maxDate", $(this).val());
 	});
 	
+	let appendImageTag = "";
+	appendImageTag +=	`<div class="input-group" id="imageFilesDiv">`;
+	appendImageTag +=		`<input class="form-control imageFiles" type="file" name="imageFiles">`;
+	appendImageTag +=				`<div class="input-group-btn">`;
+	appendImageTag +=				`<button type="button" class="btn btn-danger removeImageBtn">`;
+	appendImageTag +=	        		 `<i>X</i>`;
+	appendImageTag +=	    		`</button>`;
+	appendImageTag +=		`</div>`;
+	appendImageTag +=	`</div>`;
+	
+	let imageCnt = 1;
+	
 	//첨부이미지 추가
 	$("#addImageBtn").click(function(){
-		
+		if(imageCnt >= 5){
+			alert("첨부이미지는 최대 5개 까지만 가능합니다.");
+			return false;
+		}
+		$("#imageFieldSet").append(appendImageTag);
+		imageCnt ++;		
 	});
 	
 	//첨부이미지 제거
-	$(".removeImageBtn").click(function(){
-		
+	$("#imageFieldSet").on("click",".removeImageBtn", function(){
+		$(this).closest(".input-group").remove();
+		imageCnt --;
 	});
 	
 });
@@ -134,18 +152,14 @@ $(function(){
 			
 			
 		</fieldset>	
-		<fieldset class="border p-4">
+		<fieldset class="border p-4" id="imageFieldSet">
 			<legend class="w-auto px-2">
 				<b style="font-size: 14pt;">[상품 첨부이미지 입력]</b>
 				<button type="button" id="addImageBtn" class="btn btn-primary btn-sm">add Image</button>
 			</legend>
 			<div class="input-group">
 				<input class="form-control imageFiles" type="file" name="imageFiles">
-				<div class="input-group-btn">
-					<button type="button" class="btn btn-danger removeImageBtn">
-			             X
-			        </button>
-				</div>
+				
 			</div>
 		</fieldset>	
 	  <button type="submit" class="btn btn-primary">등록</button>
