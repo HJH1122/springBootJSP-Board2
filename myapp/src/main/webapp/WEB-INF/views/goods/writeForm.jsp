@@ -13,6 +13,10 @@ $(function(){
 	
 	//초기화면에서 중분류 데이터 세팅
 	$("#cate_code2").load("/ajax/getMidList.do?cate_code1=" + $("#cate_code1").val());
+	//초기화면에서 사이즈 데이터 세팅
+	$("#sizeDiv").load("/ajax/getSize.do?cate_code1=" + $("#cate_code1").val());
+	//초기화면에서 컬러 데이터 세팅
+	$("#colorDiv").load("/ajax/getColor.do?cate_code1=" + $("#cate_code1").val());
 	
 	//제조일 입력할때 현재날짜 이전만 가능
 	$("#product_date").datepicker("option",{"maxDate" : new Date()});
@@ -22,6 +26,10 @@ $(function(){
 	//대분류 onchange일때 중분류도 바뀌도록
 	$("#cate_code1").change(function(){
 		$("#cate_code2").load("/ajax/getMidList.do?cate_code1=" + $("#cate_code1").val());
+		//초기화면에서 사이즈 데이터 세팅
+		$("#sizeDiv").load("/ajax/getSize.do?cate_code1=" + $("#cate_code1").val());
+		//초기화면에서 컬러 데이터 세팅
+		$("#colorDiv").load("/ajax/getColor.do?cate_code1=" + $("#cate_code1").val());
 	});
 	
 	$("#sale_startDate").change(function(){
@@ -150,7 +158,18 @@ $(function(){
 	 	<fieldset class="border p-4">
 			<legend class="w-auto px-2"><b style="font-size: 14pt;">[상품 옵션 입력]</b></legend>
 			
-			
+			<fieldset class="border p-4">
+				<legend class="w-auto px-2"><b style="font-size: 14pt;">[사이즈]</b></legend>
+				<div id="sizeDiv" class="form-inline"></div>
+			</fieldset>	
+			<fieldset class="border p-4">
+				<legend class="w-auto px-2"><b style="font-size: 14pt;">[컬러]</b></legend>
+				<div id="colorDiv" class="form-inline"></div>
+			</fieldset>	
+			<fieldset class="border p-4">
+				<legend class="w-auto px-2"><b style="font-size: 14pt;">[옵션]</b></legend>
+				<div id="optionDiv" class="form-inline"></div>
+			</fieldset>	
 		</fieldset>	
 		<fieldset class="border p-4" id="imageFieldSet">
 			<legend class="w-auto px-2">

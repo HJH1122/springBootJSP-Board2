@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hjh.myapp.category.mapper.CategoryMapper;
 import com.hjh.myapp.category.vo.CategoryVO;
 import com.hjh.myapp.goods.mapper.GoodsMapper;
+import com.hjh.myapp.goods.vo.ColorVO;
 import com.hjh.myapp.goods.vo.GoodsVO;
+import com.hjh.myapp.goods.vo.SizeVO;
 import com.hjh.myapp.member.mapper.MemberMapper;
 import com.hjh.myapp.member.vo.LoginVO;
 import com.hjh.myapp.util.page.PageObject;
@@ -59,6 +61,18 @@ public class GoodsServiceImpl implements GoodsService{
 	public Integer delete(GoodsVO vo) throws Exception {
 		
 		return mapper.delete(vo);
+	}
+
+	@Override
+	public List<SizeVO> getSize(Integer cate_code1) throws Exception {
+		
+		return mapper.getSize(cate_code1);
+	}
+
+	@Override
+	public List<ColorVO> getColor(Integer cate_code1) throws Exception {
+		
+		return mapper.getColor(cate_code1);
 	}
 
 

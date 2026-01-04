@@ -88,6 +88,32 @@
 
 	</delete>
 	
+	<select id="getSize" resultType="com.hjh.myapp.goods.vo.SizeVO">
+		SELECT
+		    size_no,
+		    cate_code1,
+		    cate_code2,
+		    size_name
+		    
+		FROM basic_size
+		
+		WHERE cate_code1 = #{cate_code1} 
+		
+		
+	</select>
 	
+	<select id="getColor" resultType="com.hjh.myapp.goods.vo.ColorVO">
+		SELECT
+		    color_no,
+		    cate_code1,
+		    cate_code2,
+		    color_name
+		    
+		FROM basic_color
+		
+		WHERE cate_code1 = #{cate_code1} 
+		
+		
+	</select>
 	
 </mapper>
