@@ -67,6 +67,47 @@ $(function(){
 		imageCnt --;
 	});
 	
+	let appendOptionTag = "";
+	appendOptionTag +=	`<div class="input-group">`;
+	appendOptionTag +=		`<input class="form-control option_name" name="option_name">`;
+	appendOptionTag +=				`<div class="input-group-btn">`;
+	appendOptionTag +=				`<button type="button" class="btn btn-danger removeOptionBtn">`;
+	appendOptionTag +=	        		 `<i>X</i>`;
+	appendOptionTag +=	    		`</button>`;
+	appendOptionTag +=		`</div>`;
+	appendOptionTag +=	`</div>`;
+	
+	let optionCnt = 1;
+	
+	//첨부이미지 추가
+	$("#addOptionBtn").click(function(){
+		if(optionCnt >= 5){
+			alert("상품옵션은 최대 5개 까지만 가능합니다.");
+			return false;
+		}
+		$("#optionFieldSet").append(appendOptionTag);
+		optionCnt ++;		
+	});
+	
+	//옵션 제거
+	$("#optionFieldSet").on("click",".removeOptionBtn", function(){
+		$(this).closest(".input-group").remove();
+		optionCnt --;
+	});
+	
+	//사이즈나 컬러 체크박스 클릭
+	$("#sizeFieldSet, #colorFieldSet").on("click", function(){
+		//option input 지우기(처음것은 제외)
+		$("#optionFieldSet > div:not(:first)").remove();
+		optionCnt = 1;
+		$("#optionFieldSet input").val("");
+	});
+	
+	//옵션 input태그 클릭하면 사이즈와 컬러 체크박스 전체 해제
+	$("#optionFieldSet").on("focusin","input", function(){
+		$("#sizeFieldSet input, #colorFieldSet input").prop("checked", false);
+	});
+	
 });
 </script>
 
@@ -157,18 +198,27 @@ $(function(){
 	 	</fieldset>
 	 	<fieldset class="border p-4">
 			<legend class="w-auto px-2"><b style="font-size: 14pt;">[상품 옵션 입력]</b></legend>
-			
-			<fieldset class="border p-4">
+			<div class="m-4" style="color: red">
+				사이즈 & 컬러와 옵션을 같이 사용할 수 없습니다. 사이즈나 컬러를 선택하면 옵션이 사라집니다.
+			</div>
+			<fieldset class="border p-4" id="sizeFieldSet">
 				<legend class="w-auto px-2"><b style="font-size: 14pt;">[사이즈]</b></legend>
 				<div id="sizeDiv" class="form-inline"></div>
 			</fieldset>	
-			<fieldset class="border p-4">
+			<fieldset class="border p-4" id="colorFieldSet">
 				<legend class="w-auto px-2"><b style="font-size: 14pt;">[컬러]</b></legend>
 				<div id="colorDiv" class="form-inline"></div>
 			</fieldset>	
-			<fieldset class="border p-4">
-				<legend class="w-auto px-2"><b style="font-size: 14pt;">[옵션]</b></legend>
-				<div id="optionDiv" class="form-inline"></div>
+			<fieldset class="border p-4" id="optionFieldSet">
+				<legend class="w-auto px-2">
+					<b style="font-size: 14pt;">[옵션]</b>
+					<button type="button" id="addOptionBtn" class="btn btn-primary btn-sm">add Option</button>
+				</legend>
+				<div id="optionDiv">
+					<div class="input-group mb-3">
+						<input name="option_name" class="form-control"/>
+					</div>
+				</div>
 			</fieldset>	
 		</fieldset>	
 		<fieldset class="border p-4" id="imageFieldSet">
