@@ -69,7 +69,7 @@ $(function(){
 	
 	let appendOptionTag = "";
 	appendOptionTag +=	`<div class="input-group">`;
-	appendOptionTag +=		`<input class="form-control option_name" name="option_name">`;
+	appendOptionTag +=		`<input class="form-control option_name" name="option_names">`;
 	appendOptionTag +=				`<div class="input-group-btn">`;
 	appendOptionTag +=				`<button type="button" class="btn btn-danger removeOptionBtn">`;
 	appendOptionTag +=	        		 `<i>X</i>`;
@@ -149,7 +149,7 @@ $(function(){
 		 	</div>
 			<div class="form-group">
 			    <label for="detail_image_name">상세설명 이미지</label>
-				<input class="form-control" id="detail_image_name" name="detail_image_name" type="file">
+				<input class="form-control" id="detailImageFile" name="detailImageFile" type="file">
 			</div>
 			<div class="form-group">
 			    <label for="content">상세설명</label>
@@ -157,17 +157,13 @@ $(function(){
 			</div>
 			<div class="form-group">
 			    <label for="image_name">대표 이미지</label>
-				<input class="form-control" id="image_name" name="image_name" type="file">
+				<input class="form-control" id="imageFile" name="imageFile" type="file">
 			</div>
 			
 		</fieldset>	
 		<fieldset class="border p-4">
 			<legend class="w-auto px-2"><b style="font-size: 14pt;">[상품 가격정보 입력]</b></legend>
 			<div class="form-group">
-		 		<label for="price">정가</label>
-				<input class="form-control" id="price" name="price" required>	 		
-		 	</div>
-		 	<div class="form-group">
 		 		<label for="price">정가</label>
 				<input class="form-control" id="price" name="price" required>	 		
 		 	</div>
@@ -216,7 +212,7 @@ $(function(){
 				</legend>
 				<div id="optionDiv">
 					<div class="input-group mb-3">
-						<input name="option_name" class="form-control"/>
+						<input name="option_names" class="form-control"/>
 					</div>
 				</div>
 			</fieldset>	

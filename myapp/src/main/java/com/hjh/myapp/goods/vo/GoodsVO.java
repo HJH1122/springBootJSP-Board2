@@ -25,7 +25,9 @@ public class GoodsVO {
 	private Integer discount_rate;
 	private Integer delivery_charge;
 	private Integer saved_rate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date sale_startDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date sale_endDate;
 	
 	public Integer getSale_price() {

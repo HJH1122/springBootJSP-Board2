@@ -1,5 +1,6 @@
 package com.hjh.myapp.goods.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hjh.myapp.category.service.CategoryService;
@@ -79,16 +81,23 @@ public class GoodsController {
 
 	
 	@PostMapping("/write.do")
-	public String write(GoodsVO vo, RedirectAttributes rttr) throws Exception{
+	public String write(GoodsVO vo, MultipartFile imageFile, MultipartFile detailImageFile, ArrayList<MultipartFile> imageFiles, @RequestParam(name = "size_nos", required = false) ArrayList<Long> size_nos, @RequestParam(name = "color_nos", required = false) ArrayList<String> color_nos, @RequestParam(name = "option_names", required = false) ArrayList<String> option_names, RedirectAttributes rttr) throws Exception{
 		
-		log.info("write vo:");
+		log.info("write vo:" + vo);
 
 		
-		service.write(vo);
+		//service.write(vo);
 		
 		rttr.addFlashAttribute("msg","상품이 등록되었습니다.");
-		
-		return "redirect:list.do?cate_code1=" + vo.getCate_code1();
+		log.info("대표이미지:" + imageFile.getOriginalFilename());
+		log.info("상세설명:" + detailImageFile.getOriginalFilename());
+		for(MultipartFile file: imageFiles)
+			log.info(file.getOriginalFilename());
+		log.info("사이즈:"+size_nos);
+		log.info("컬러:"+color_nos);
+		log.info("옵션:"+option_names);
+		return null;
+		//return "redirect:list.do";
 	}
 	
 	@PostMapping("/update.do")
