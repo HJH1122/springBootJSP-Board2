@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
+import lombok.Value;
 
 @Data
 public class GoodsVO {

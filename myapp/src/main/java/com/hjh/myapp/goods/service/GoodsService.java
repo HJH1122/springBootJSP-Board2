@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Param;
 
 import com.hjh.myapp.category.vo.CategoryVO;
 import com.hjh.myapp.goods.vo.ColorVO;
+import com.hjh.myapp.goods.vo.GoodsImageVO;
+import com.hjh.myapp.goods.vo.GoodsOptionVO;
+import com.hjh.myapp.goods.vo.GoodsSizeColorVO;
 import com.hjh.myapp.goods.vo.GoodsVO;
 import com.hjh.myapp.goods.vo.SizeVO;
 import com.hjh.myapp.util.page.PageObject;
@@ -18,7 +21,7 @@ public interface GoodsService {
 
 	public GoodsVO view(Long no, int inc) throws Exception;
 	
-	public Integer write(GoodsVO vo) throws Exception;
+	public Integer write(GoodsVO vo, List<GoodsImageVO> goodsImageList, List<GoodsSizeColorVO> goodsSizeColorList, List<GoodsOptionVO> goodsOptionList) throws Exception;
 
 	public Integer update(GoodsVO vo) throws Exception;
 

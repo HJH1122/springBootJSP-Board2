@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Param;
 
 import com.hjh.myapp.category.vo.CategoryVO;
 import com.hjh.myapp.goods.vo.ColorVO;
+import com.hjh.myapp.goods.vo.GoodsImageVO;
+import com.hjh.myapp.goods.vo.GoodsOptionVO;
+import com.hjh.myapp.goods.vo.GoodsSizeColorVO;
 import com.hjh.myapp.goods.vo.GoodsVO;
 import com.hjh.myapp.goods.vo.SizeVO;
 import com.hjh.myapp.util.page.PageObject;
@@ -22,7 +25,16 @@ public interface GoodsMapper {
 
 	public GoodsVO view(Long no) throws Exception;
 	
+	//상품 정보 등록
 	public Integer write(GoodsVO vo) throws Exception;
+	//상품 추가이미지 등록
+	public Integer writeImage(List<GoodsImageVO> goodsImageList) throws Exception;
+	//상품 사이즈&컬러 등록
+	public Integer writeSizeColor(List<GoodsSizeColorVO> goodsSizeColorList) throws Exception;
+	//상품 옵션 등록
+	public Integer writeOption(List<GoodsOptionVO> goodsOptionList) throws Exception;
+	//상품 가격 등록
+	public Integer writePrice(GoodsVO vo) throws Exception;
 
 	public Integer update(GoodsVO vo) throws Exception;
 

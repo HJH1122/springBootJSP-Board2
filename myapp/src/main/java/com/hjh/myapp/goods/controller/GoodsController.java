@@ -23,9 +23,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.hjh.myapp.category.service.CategoryService;
 import com.hjh.myapp.category.vo.CategoryVO;
 import com.hjh.myapp.goods.service.GoodsService;
+import com.hjh.myapp.goods.vo.GoodsImageVO;
+import com.hjh.myapp.goods.vo.GoodsOptionVO;
+import com.hjh.myapp.goods.vo.GoodsSizeColorVO;
 import com.hjh.myapp.goods.vo.GoodsVO;
 import com.hjh.myapp.member.service.MemberService;
 import com.hjh.myapp.member.vo.LoginVO;
+import com.hjh.myapp.util.file.FileUtil;
 import com.hjh.myapp.util.page.PageObject;
 
 
@@ -40,6 +44,8 @@ public class GoodsController {
 	@Autowired
 	@Qualifier("categoryService")
 	private CategoryService categoryService;
+	
+	String path = "/upload/goods";
 	
 	private static final Logger log = LoggerFactory.getLogger(GoodsController.class);
 	
@@ -81,7 +87,7 @@ public class GoodsController {
 
 	
 	@PostMapping("/write.do")
-	public String write(GoodsVO vo, MultipartFile imageFile, MultipartFile detailImageFile, ArrayList<MultipartFile> imageFiles, @RequestParam(name = "size_nos", required = false) ArrayList<Long> size_nos, @RequestParam(name = "color_nos", required = false) ArrayList<String> color_nos, @RequestParam(name = "option_names", required = false) ArrayList<String> option_names, RedirectAttributes rttr) throws Exception{
+	public String write(GoodsVO vo, MultipartFile imageFile, MultipartFile detailImageFile, ArrayList<MultipartFile> imageFiles, @RequestParam(name = "size_nos", required = false) ArrayList<Long> size_nos, @RequestParam(name = "color_nos", required = false) ArrayList<Long> color_nos, @RequestParam(name = "option_names", required = false) ArrayList<String> option_names, HttpServletRequest request, RedirectAttributes rttr) throws Exception{
 		
 		log.info("write vo:" + vo);
 
@@ -96,6 +102,77 @@ public class GoodsController {
 		log.info("사이즈:"+size_nos);
 		log.info("컬러:"+color_nos);
 		log.info("옵션:"+option_names);
+		//상품 대표이미지
+		vo.setImage_name(FileUtil.upload(path, imageFile, request));
+		String fileName = detailImageFile.getOriginalFilename();
+		//상품 상세이미지
+		if(fileName != null && !fileName.equals("")) {
+			vo.setDetail_image_name(FileUtil.upload(path, detailImageFile, request));
+		}
+		List<GoodsImageVO> goodsImageList = null;
+		//첨부이미지 - GoodsImageVO
+		if(imageFiles != null && imageFiles.size() > 0) {
+			for(MultipartFile file: imageFiles) {
+				if(goodsImageList == null) {
+					goodsImageList = new ArrayList<>();
+				}
+				fileName = file.getOriginalFilename();
+				if(fileName != null && !fileName.equals("")) {
+					GoodsImageVO imageVO = new GoodsImageVO();
+					imageVO.setImage_name(FileUtil.upload(path, file, request));
+					goodsImageList.add(imageVO);
+				}
+			}
+		}
+		log.info("vo2:"+vo);
+		log.info("goodsImageList2:"+goodsImageList);
+		//사이즈&컬러 = 사이즈*컬러 GoodsSizeColorVO
+		List<GoodsSizeColorVO> goodsSizeColorList = null;
+		if(size_nos != null && size_nos.size() > 0) {
+			for(Long sizeNo: size_nos) {
+				if(goodsSizeColorList == null) {
+					goodsSizeColorList = new ArrayList<>();
+				}
+				if(color_nos != null && color_nos.size() > 0) {
+					for(Long colorNo: color_nos) {
+						GoodsSizeColorVO sizeColorVO = new GoodsSizeColorVO();
+						sizeColorVO.setSize_no(sizeNo);
+						sizeColorVO.setColor_no(colorNo);
+						goodsSizeColorList.add(sizeColorVO);
+					}
+				}else {
+					GoodsSizeColorVO sizeColorVO = new GoodsSizeColorVO();
+					sizeColorVO.setSize_no(sizeNo);
+					goodsSizeColorList.add(sizeColorVO);
+				}
+				
+				
+			}
+		}
+		log.info("goodsSizeColorList2:"+goodsSizeColorList);
+		
+		//옵션 GoodsOptionVO
+		List<GoodsOptionVO> goodsOptionList = null;
+		if(option_names != null && option_names.size() > 0) {
+			for(String option_name: option_names) {
+				if(goodsOptionList == null) {
+					goodsOptionList = new ArrayList<>();
+				}
+				if(option_names != null && !option_names.equals("")) {
+					GoodsOptionVO optionVO = new GoodsOptionVO();
+					optionVO.setOption_name(option_name);
+					goodsOptionList.add(optionVO);
+				}
+				
+			}
+		}
+		log.info("goodsOptionList2:"+goodsOptionList);
+		
+		//write에 넘길 데이터
+		service.write(vo, goodsImageList, goodsSizeColorList, goodsOptionList);
+		
+		rttr.addFlashAttribute("msg", "상품 등록되었습니다");
+		
 		return null;
 		//return "redirect:list.do";
 	}

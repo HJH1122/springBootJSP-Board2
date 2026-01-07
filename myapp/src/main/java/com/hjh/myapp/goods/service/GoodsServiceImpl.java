@@ -11,6 +11,9 @@ import com.hjh.myapp.category.mapper.CategoryMapper;
 import com.hjh.myapp.category.vo.CategoryVO;
 import com.hjh.myapp.goods.mapper.GoodsMapper;
 import com.hjh.myapp.goods.vo.ColorVO;
+import com.hjh.myapp.goods.vo.GoodsImageVO;
+import com.hjh.myapp.goods.vo.GoodsOptionVO;
+import com.hjh.myapp.goods.vo.GoodsSizeColorVO;
 import com.hjh.myapp.goods.vo.GoodsVO;
 import com.hjh.myapp.goods.vo.SizeVO;
 import com.hjh.myapp.member.mapper.MemberMapper;
@@ -44,9 +47,33 @@ public class GoodsServiceImpl implements GoodsService{
 
 	@Override
 	@Transactional
-	public Integer write(GoodsVO vo) throws Exception {
+	public Integer write(GoodsVO vo, List<GoodsImageVO> goodsImageList, List<GoodsSizeColorVO> goodsSizeColorList, List<GoodsOptionVO> goodsOptionList) throws Exception {
 		
-		Integer result = mapper.write(vo);
+		Integer result = null;
+		mapper.write(vo);
+		//추가이미지
+		if(goodsImageList != null && goodsImageList.size() > 0) {
+			for(GoodsImageVO imageVO : goodsImageList) {
+				imageVO.setGoods_no(vo.getGoods_no());
+			}
+			mapper.writeImage(goodsImageList);
+		}
+		//사이즈&컬러
+		if(goodsSizeColorList != null && goodsSizeColorList.size() > 0) {
+			for(GoodsSizeColorVO sizeColorVO : goodsSizeColorList) {
+				sizeColorVO.setGoods_no(vo.getGoods_no());
+			}
+			mapper.writeSizeColor(goodsSizeColorList);
+		}
+		//옵션
+		if(goodsOptionList != null && goodsOptionList.size() > 0) {
+			for(GoodsOptionVO optionVO : goodsOptionList) {
+				optionVO.setGoods_no(vo.getGoods_no());
+			}
+			mapper.writeOption(goodsOptionList);
+		}
+		//가격
+		result = mapper.writePrice(vo);
 			
 		return result;
 	}
