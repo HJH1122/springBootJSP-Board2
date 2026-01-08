@@ -32,7 +32,7 @@ public class GoodsVO {
 	private Date sale_endDate;
 	
 	public Integer getSale_price() {
-		if(discount != 0) {
+		if(discount != null && discount != 0) {
 			return price - discount;
 		}
 		return (price - (price * discount_rate / 100)) / 10 * 10;

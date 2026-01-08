@@ -58,6 +58,10 @@ public class GoodsController {
 		
 		PageObject pageObject = PageObject.getInstance(request);
 		
+		String strPerPageNum = request.getParameter("perPageNum");
+		if(strPerPageNum == null || strPerPageNum.equals("")) {
+			pageObject.setPerPageNum(6);
+		}
 
 		model.addAttribute("list", service.list(pageObject));
 		
@@ -87,7 +91,7 @@ public class GoodsController {
 
 	
 	@PostMapping("/write.do")
-	public String write(GoodsVO vo, MultipartFile imageFile, MultipartFile detailImageFile, ArrayList<MultipartFile> imageFiles, @RequestParam(name = "size_nos", required = false) ArrayList<Long> size_nos, @RequestParam(name = "color_nos", required = false) ArrayList<Long> color_nos, @RequestParam(name = "option_names", required = false) ArrayList<String> option_names, HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+	public String write(GoodsVO vo, MultipartFile imageFile, MultipartFile detailImageFile, ArrayList<MultipartFile> imageFiles, @RequestParam(name = "size_nos", required = false) ArrayList<Long> size_nos, @RequestParam(name = "color_nos", required = false) ArrayList<Long> color_nos, @RequestParam(name = "option_names", required = false) ArrayList<String> option_names, Long perPageNum, HttpServletRequest request, RedirectAttributes rttr) throws Exception{
 		
 		log.info("write vo:" + vo);
 
@@ -173,8 +177,8 @@ public class GoodsController {
 		
 		rttr.addFlashAttribute("msg", "상품 등록되었습니다");
 		
-		return null;
-		//return "redirect:list.do";
+		
+		return "redirect:list.do?perPageNum=" + perPageNum;
 	}
 	
 	@PostMapping("/update.do")

@@ -56,17 +56,82 @@
 	    where no = #{no}
 	</insert>
 	
-	<insert id="write">
-	    INSERT INTO category (cate_code1, cate_code2, cate_name)
-	    SELECT
+	<insert id="write"
+	        parameterType="com.hjh.myapp.goods.vo.GoodsVO"
+	        useGeneratedKeys="true"
+	        keyProperty="goods_no">
+	    INSERT INTO goods (
+	        cate_code1,
+	        cate_code2,
+	        goods_name,
+	        company,
+	        product_date,
+	        image_name,
+	        detail_image_name,
+	        content
+	    )
+	    VALUES (
 	        #{cate_code1},
-	        IFNULL(MAX(cate_code2), 0) + 1,
-	        #{cate_name}
-	    FROM (
-	        SELECT cate_code2
-	        FROM category
-	        WHERE cate_code1 = #{cate_code1}
+	        #{cate_code2},
+	        #{goods_name},
+	        #{company},
+	        #{product_date},
+	        #{image_name},
+	        #{detail_image_name, jdbcType=VARCHAR},
+	        #{content}
+	    )
+	</insert>
+	
+	<insert id="writeImage" parameterType="java.util.List">
+	    INSERT INTO goods_image (goods_no, image_name)
+	    VALUES
+	    <foreach collection="list" item="vo" separator=",">
+	        (#{vo.goods_no}, #{vo.image_name})
+	    </foreach>
+	</insert>
+	
+	<insert id="writeSizeColor">
+	    INSERT INTO goods_sizeColor(goods_no, size_no, color_no)
+	    SELECT goods_no, size_no, color_no from (
+	        <foreach collection="list" item="vo" separator="UNION ALL">
+	            SELECT
+	                #{vo.goods_no} AS goods_no,
+	                #{vo.size_no} AS size_no,
+	                #{vo.color_no, jdbcType=INTEGER} AS color_no
+	        </foreach>
 	    ) t
+	</insert>
+	
+	<insert id="writeOption">
+	    INSERT INTO goods_option(goods_no, option_name)
+	    SELECT goods_no, option_name from (
+	        <foreach collection="list" item="vo" separator="UNION ALL">
+	            SELECT
+	                #{vo.goods_no} AS goods_no,
+	                #{vo.option_name} AS option_name
+	        </foreach>
+	    ) t
+	</insert>
+	
+	<insert id="writePrice">
+	    INSERT INTO price(goods_no, price, discount, discount_rate, delivery_charge, saved_rate, sale_startDate, sale_endDate)
+	    VALUES (
+	        #{goods_no},
+	        #{price},
+	        #{discount, jdbcType=INTEGER},
+	        #{discount_rate, jdbcType=INTEGER},
+	        #{delivery_charge},
+	        #{saved_rate},
+	        <choose>
+	            <when test="sale_startDate != null">
+	                #{sale_startDate}
+	            </when>
+	            <otherwise>
+	                DEFAULT
+	            </otherwise>
+	        </choose>,
+	        #{sale_endDate}
+	    )
 	</insert>
 	
 	<update id="update">

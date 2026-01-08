@@ -117,6 +117,7 @@ $(function(){
 <div class="container">
 	 <h3>상품등록</h3>	
 	 <form action="write.do" method="post" enctype="multipart/form-data">
+	 <input type="hidden" name="perPageNum" value="${param.perPageNum }">
 	 	<fieldset class="border p-4">
 			<legend class="w-auto px-2"><b style="font-size: 14pt;">[상품 기본정보 입력]</b></legend>	
 		 	<div class="form-inline">
