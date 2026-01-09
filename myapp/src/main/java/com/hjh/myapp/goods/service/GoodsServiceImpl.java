@@ -13,6 +13,7 @@ import com.hjh.myapp.goods.mapper.GoodsMapper;
 import com.hjh.myapp.goods.vo.ColorVO;
 import com.hjh.myapp.goods.vo.GoodsImageVO;
 import com.hjh.myapp.goods.vo.GoodsOptionVO;
+import com.hjh.myapp.goods.vo.GoodsSearchVO;
 import com.hjh.myapp.goods.vo.GoodsSizeColorVO;
 import com.hjh.myapp.goods.vo.GoodsVO;
 import com.hjh.myapp.goods.vo.SizeVO;
@@ -28,10 +29,10 @@ public class GoodsServiceImpl implements GoodsService{
 	private GoodsMapper mapper;
 
 	@Override
-	public List<GoodsVO> list(PageObject pageObject) throws Exception {
+	public List<GoodsVO> list(PageObject pageObject, GoodsSearchVO searchVO) throws Exception {
 		
-		pageObject.setTotalRow(mapper.getTotalRow(pageObject));
-		return mapper.list(pageObject);
+		pageObject.setTotalRow(mapper.getTotalRow(searchVO));
+		return mapper.list(pageObject, searchVO);
 	}
 	
 	@Override

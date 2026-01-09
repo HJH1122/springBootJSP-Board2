@@ -8,6 +8,7 @@ import com.hjh.myapp.category.vo.CategoryVO;
 import com.hjh.myapp.goods.vo.ColorVO;
 import com.hjh.myapp.goods.vo.GoodsImageVO;
 import com.hjh.myapp.goods.vo.GoodsOptionVO;
+import com.hjh.myapp.goods.vo.GoodsSearchVO;
 import com.hjh.myapp.goods.vo.GoodsSizeColorVO;
 import com.hjh.myapp.goods.vo.GoodsVO;
 import com.hjh.myapp.goods.vo.SizeVO;
@@ -17,7 +18,7 @@ import com.hjh.myapp.util.page.PageObject;
 @org.springframework.stereotype.Service
 public interface GoodsService {
 
-	public List<GoodsVO> list(PageObject pageObject) throws Exception;
+	public List<GoodsVO> list(PageObject pageObject, GoodsSearchVO searchVO) throws Exception;
 
 	public GoodsVO view(Long no, int inc) throws Exception;
 	

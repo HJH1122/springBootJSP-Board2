@@ -10,6 +10,7 @@ public class PriceVO {
 	private Long price_no;
 	private Long goods_no;
 	private Integer price;
+	private Integer sale_price;
 	private Integer discount;
 	private Integer discount_rate;
 	private Integer delivery_charge;

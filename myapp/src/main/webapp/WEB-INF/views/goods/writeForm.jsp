@@ -108,6 +108,32 @@ $(function(){
 		$("#sizeFieldSet input, #colorFieldSet input").prop("checked", false);
 	});
 	
+	// 가격 관련 input 이벤트
+	$("#price, #discount, #discount_rate").on("keyup change", function () {
+		calcSalePrice();
+	});
+
+	function calcSalePrice() {
+		let price = Number($("#price").val()) || 0;
+		let discount = Number($("#discount").val()) || 0;
+		let discountRate = Number($("#discount_rate").val()) || 0;
+
+		// 1. 정가 - 할인가
+		let tempPrice = price - discount;
+		if (tempPrice < 0) tempPrice = 0;
+
+		// 2. 할인율 적용
+		if (discountRate > 0) {
+			tempPrice = tempPrice - (tempPrice * discountRate / 100);
+		}
+
+		// 3. 10원 단위 절삭
+		let salePrice = Math.floor(tempPrice / 10) * 10;
+
+		$("#sale_price").val(salePrice);
+	}
+		
+
 });
 </script>
 
@@ -166,15 +192,19 @@ $(function(){
 			<legend class="w-auto px-2"><b style="font-size: 14pt;">[상품 가격정보 입력]</b></legend>
 			<div class="form-group">
 		 		<label for="price">정가</label>
-				<input class="form-control" id="price" name="price" required>	 		
+				<input class="form-control" id="price" name="price" required value="0">	 		
 		 	</div>
 		 	<div class="form-group">
 		 		<label for="discount">할인가</label>
-				<input class="form-control" id="discount" name="discount">	 		
+				<input class="form-control" id="discount" name="discount" value="0">	 		
 		 	</div>
 		 	<div class="form-group">
 		 		<label for="discount_rate">할인율</label>
-				<input class="form-control" id="discount_rate" name="discount_rate">	 		
+				<input class="form-control" id="discount_rate" name="discount_rate" value="0">	 		
+		 	</div>
+		 	<div class="form-group">
+		 		<label for="sale_price">판매가</label>
+				<input class="form-control" id="sale_price" name="sale_price" readonly value="0">	 		
 		 	</div>
 		 	<div class="form-group">
 		 		<label for="delivery_charge">배송료</label>

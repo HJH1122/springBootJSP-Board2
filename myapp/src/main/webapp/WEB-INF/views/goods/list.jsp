@@ -60,12 +60,32 @@ $(function(){
 		location="view.do?no="+ no + "&${pageObject.pageQuery}";
 	});
 	
+	//대분류 onchange일때 중분류도 바뀌도록
+	$("#cate_code1").change(function(){
+		$("#cate_code2").load("/ajax/getMidList.do?cate_code1=" + $("#cate_code1").val() + "&mode=1");
+	});
+	
+	
 	$("#perPageNum").change(function(){
 		$("#searchForm").submit();
 	});
 	
-	$("#key").val("${(empty pageObject.key)? 't' : pageObject.key}");
-	$("#perPageNum").val("${(empty pageObject.perPageNum)? '10' : pageObject.perPageNum}");
+	//검색버튼
+	$("#searchBtn").click(function(){
+		
+		//검색내용이 없으면 검색안함
+		if($("#cate_code1").val() == 0 && $("#goods_name").val().trim() == "" && $("#min").val() == 0 && $("#min").val() == ""  && $("#max").val() == 0 && $("#max").val() == "" ){
+			return false;
+		}
+		
+		//return false;
+	});
+	
+	$("#cate_code1").val("${searchVO.cate_code1}");
+	$("#cate_code2").val("${searchVO.cate_code2}");
+	$("#goods_name").val("${searchVO.goods_name}");
+	$("#min").val("${searchVO.min}");
+	$("#max").val("${searchVO.max}");
 	
 });
 
@@ -76,28 +96,41 @@ $(function(){
 <div class="container">
 	 <form action="list.do" id="searchForm">
 	 	<input name="page" value="1" type="hidden">
+	 	<input name="perPageNum" value="${pageObject.perPageNum }" type="hidden">
 			<div class="row">
-			  <div class="col-md-8">
-			 	<div class="input-group mb-3">
-			 		<div class="input-group-prepend">
-				 		<select class="form-control" name="key" id="key">
-				 			<option value="t">제목</option>
-				 			<option value="c">내용</option>
-				 			<option value="tc">제목/내용</option>
-				 			<option value="f">파일명</option>
-				 		</select>
-				 	</div>
-				 	<input type="text" class="form-control" placeholder="검색" id="word" name="word" value="${pageObejct.word }">
-				 	<div class="input-group-append">
-				 		<button class="btn btn-outline-primary">
-				 			<i class="fa fa-search"></i>
-				 		</button>
-				 	</div>
+			  <div class="col-md-12 form-inline">
+			 	<div class="form-group">
+			 		<label for="title">대분류</label>
+					<select class="form-control" name="cate_code1" id="cate_code1" style="margin: 0 10px;">
+						<option value="0">선택</option>
+						<c:forEach items="${bigList}" var="vo">
+							<option value="${vo.cate_code1 }">"${vo.cate_name }"</option>
+						</c:forEach>
+					</select>
 			 	</div>
+			 	<div class="form-group">
+			 		<label for="title">중분류</label>
+					<select class="form-control" name="cate_code2" id="cate_code2" style="margin: 0 10px;">
+						<option value="0">선택</option>
+					</select>
+			 	</div>
+			 	<div class="form-group">
+			 		<label for="goods_name">상품명</label>
+					<input class="form-control" id="goods_name" name="goods_name">	 		
+			 	</div>
+			 	<div class="form-group">
+			 		<label for="min">최소가격</label>
+					<input class="form-control" id="min" name="min" type="number" min="0">	 		
+			 	</div>
+			 	<div class="form-group">
+			 		<label for="max">최대가격</label>
+					<input class="form-control" id="max" name="max" type="number" min="0">	 		
+			 	</div>
+			 	<button id="searchBtn" class="btn btn-primary">검색</button>
 			 </div>
-			
-			 
-			 <div class="col-md-4">
+			 </div>
+			 <div class="row">
+			 <div class="col-md-12">
 			 	<div style="width: 200px;" class="float-right">
 			 		<div class="input-group mb-3">
 			 			<div class="input-group-prepend">
@@ -149,7 +182,7 @@ $(function(){
 			          		판매가 : <fmt:formatNumber value="${vo.sale_price }" />원
 			          	</div>
 			          	<div>
-			          		적립금 : "${vo.saved_rate}%"
+			          		적립금 : ${vo.saved_rate}%
 			          	</div>
 			          </p>
 			        </div>

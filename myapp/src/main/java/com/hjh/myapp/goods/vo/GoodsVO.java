@@ -22,6 +22,7 @@ public class GoodsVO {
 	private String image_name;
 	private Long hit;
 	private Integer price;
+	private Integer sale_price;
 	private Integer discount;
 	private Integer discount_rate;
 	private Integer delivery_charge;
@@ -31,10 +32,5 @@ public class GoodsVO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date sale_endDate;
 	
-	public Integer getSale_price() {
-		if(discount != null && discount != 0) {
-			return price - discount;
-		}
-		return (price - (price * discount_rate / 100)) / 10 * 10;
-	}
+	
 }

@@ -9,6 +9,8 @@
 		    g.goods_no,
 		    g.goods_name,
 		    p.price,
+		    p.sale_price,
+		    p.saved_rate,
 		    p.discount,
 		    p.discount_rate,
 		    g.hit,
@@ -22,19 +24,44 @@
 			1 = 1
 			<include refid="search" />
 		ORDER BY g.goods_no DESC
-		LIMIT #{perPageNum} OFFSET #{limit}
+		LIMIT #{pageObject.limit}, #{pageObject.perPageNum}
 	</select>
 	
 	<select id="getTotalRow" parameterType="com.hjh.myapp.util.page.PageObject" resultType="int">
 	    SELECT COUNT(*)
-	    FROM goods
+	    FROM goods g
+	    LEFT JOIN price p
+		    ON g.goods_no = p.goods_no
+		    AND p.sale_startDate <![CDATA[ <= ]]> CURDATE()
+		    AND CURDATE() <![CDATA[ <= ]]> p.sale_endDate
 	    WHERE 1 = 1
 	    	<include refid="search" />
 	    
 	</select>
 	
 	<sql id="search">
-	
+		<if test="searchVO.exist">
+			and (
+			
+				<trim prefixOverrides="and">
+					<if test="searchVO.cate_code1 != null and searchVO.cate_code1 > 0">
+						and cate_code1 = #{searchVO.cate_code1}
+					</if>
+					<if test="searchVO.cate_code2 != null and searchVO.cate_code2 > 0">
+						and cate_code2 = #{searchVO.cate_code2}
+					</if>
+					<if test="searchVO.goods_name != null and searchVO.goods_name != ''">
+						and goods_name like CONCAT('%', #{searchVO.goods_name}, '%')
+					</if>
+					<if test="searchVO.min != null and searchVO.min > 0">
+						<![CDATA[ and sale_price >= #{searchVO.min} ]]>
+					</if>
+					<if test="searchVO.max != null and searchVO.max > 0">
+						<![CDATA[ and sale_price <= #{searchVO.max} ]]>
+					</if>
+				</trim>
+			)
+		</if>
 	</sql>
 	
 	<update id="increase">
@@ -114,23 +141,35 @@
 	</insert>
 	
 	<insert id="writePrice">
-	    INSERT INTO price(goods_no, price, discount, discount_rate, delivery_charge, saved_rate, sale_startDate, sale_endDate)
+	    INSERT INTO price(
+	    		goods_no, 
+	    		price, 
+	    		sale_price,
+	    		discount, 
+	    		discount_rate, 
+	    		delivery_charge, 
+	    		saved_rate
+	    		<if test="sale_startDate != null">
+	    		,sale_startDate
+	    		</if>
+	    		<if test="sale_endDate != null">
+	    		,sale_endDate
+	    		</if>
+	    	)
 	    VALUES (
 	        #{goods_no},
 	        #{price},
+	        #{sale_price, jdbcType=INTEGER},
 	        #{discount, jdbcType=INTEGER},
 	        #{discount_rate, jdbcType=INTEGER},
 	        #{delivery_charge},
-	        #{saved_rate},
-	        <choose>
-	            <when test="sale_startDate != null">
-	                #{sale_startDate}
-	            </when>
-	            <otherwise>
-	                DEFAULT
-	            </otherwise>
-	        </choose>,
-	        #{sale_endDate}
+	        #{saved_rate}
+	        <if test="sale_startDate != null">
+			 ,#{sale_startDate}
+			</if>
+			<if test="sale_endDate != null">
+			 ,#{sale_endDate}
+			</if>
 	    )
 	</insert>
 	

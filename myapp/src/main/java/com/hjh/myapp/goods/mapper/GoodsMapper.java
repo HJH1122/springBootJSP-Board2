@@ -9,6 +9,7 @@ import com.hjh.myapp.category.vo.CategoryVO;
 import com.hjh.myapp.goods.vo.ColorVO;
 import com.hjh.myapp.goods.vo.GoodsImageVO;
 import com.hjh.myapp.goods.vo.GoodsOptionVO;
+import com.hjh.myapp.goods.vo.GoodsSearchVO;
 import com.hjh.myapp.goods.vo.GoodsSizeColorVO;
 import com.hjh.myapp.goods.vo.GoodsVO;
 import com.hjh.myapp.goods.vo.SizeVO;
@@ -17,9 +18,9 @@ import com.hjh.myapp.util.page.PageObject;
 @Mapper
 public interface GoodsMapper {
 
-	public List<GoodsVO> list(PageObject pageObject) throws Exception;
+	public List<GoodsVO> list(@Param("pageObject") PageObject pageObject, @Param("searchVO") GoodsSearchVO searchVO) throws Exception;
 	
-	public Integer getTotalRow(PageObject pageObject);
+	public Integer getTotalRow(@Param("searchVO") GoodsSearchVO searchVO);
 	
 	public Integer increase(Long no);
 

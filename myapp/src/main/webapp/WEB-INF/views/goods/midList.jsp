@@ -1,5 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${param.mode == '1' }">
+	<option value="0">선택</option>
+</c:if>
 
 <c:forEach items="${midList }" var="vo">
 	<option value="${vo.cate_code2 }">"${vo.cate_name }"</option>

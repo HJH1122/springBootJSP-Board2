@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +26,7 @@ import com.hjh.myapp.category.vo.CategoryVO;
 import com.hjh.myapp.goods.service.GoodsService;
 import com.hjh.myapp.goods.vo.GoodsImageVO;
 import com.hjh.myapp.goods.vo.GoodsOptionVO;
+import com.hjh.myapp.goods.vo.GoodsSearchVO;
 import com.hjh.myapp.goods.vo.GoodsSizeColorVO;
 import com.hjh.myapp.goods.vo.GoodsVO;
 import com.hjh.myapp.member.service.MemberService;
@@ -52,7 +54,7 @@ public class GoodsController {
 	
 	
 	@GetMapping("/list.do")
-	public String list(Model model, HttpServletRequest request) throws Exception{
+	public String list(Model model, @ModelAttribute(name = "searchVO") GoodsSearchVO searchVO, HttpServletRequest request) throws Exception{
 		
 		log.info("상품 리스트");
 		
@@ -62,8 +64,10 @@ public class GoodsController {
 		if(strPerPageNum == null || strPerPageNum.equals("")) {
 			pageObject.setPerPageNum(6);
 		}
+		//대분류 가져와서 JSP에 넘기기
+		model.addAttribute("bigList", categoryService.list(0));
 
-		model.addAttribute("list", service.list(pageObject));
+		model.addAttribute("list", service.list(pageObject, searchVO));
 		
 		model.addAttribute("pageObject", pageObject);
 		return "goods/list";
