@@ -37,13 +37,13 @@ public class GoodsServiceImpl implements GoodsService{
 	
 	@Override
 	@Transactional
-	public GoodsVO view(Long no, int inc) throws Exception {
+	public GoodsVO view(Long goods_no, int inc) throws Exception {
 		
 		if(inc ==1) {
-			mapper.increase(no);
+			mapper.increase(goods_no);
 		}
 		
-		return mapper.view(no);
+		return mapper.view(goods_no);
 	}
 
 	@Override
@@ -101,6 +101,24 @@ public class GoodsServiceImpl implements GoodsService{
 	public List<ColorVO> getColor(Integer cate_code1) throws Exception {
 		
 		return mapper.getColor(cate_code1);
+	}
+
+	@Override
+	public List<GoodsImageVO> viewImageList(Long goods_no) {
+		
+		return mapper.viewImageList(goods_no);
+	}
+
+	@Override
+	public List<GoodsSizeColorVO> viewSizeColorList(Long goods_no) {
+		
+		return mapper.viewSizeColorList(goods_no);
+	}
+
+	@Override
+	public List<GoodsOptionVO> viewOptionList(Long goods_no) {
+		
+		return mapper.viewOptionList(goods_no);
 	}
 
 

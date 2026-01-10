@@ -20,7 +20,7 @@ public interface GoodsService {
 
 	public List<GoodsVO> list(PageObject pageObject, GoodsSearchVO searchVO) throws Exception;
 
-	public GoodsVO view(Long no, int inc) throws Exception;
+	public GoodsVO view(Long goods_no, int inc) throws Exception;
 	
 	public Integer write(GoodsVO vo, List<GoodsImageVO> goodsImageList, List<GoodsSizeColorVO> goodsSizeColorList, List<GoodsOptionVO> goodsOptionList) throws Exception;
 
@@ -31,4 +31,12 @@ public interface GoodsService {
 	public List<SizeVO> getSize(Integer cate_code1) throws Exception;
 	
 	public List<ColorVO> getColor(Integer cate_code1) throws Exception;
+	
+	public List<GoodsImageVO> viewImageList(Long goods_no);
+
+	public List<GoodsSizeColorVO> viewSizeColorList(Long goods_no);
+
+	public List<GoodsOptionVO> viewOptionList(Long goods_no);
+
+	
 }

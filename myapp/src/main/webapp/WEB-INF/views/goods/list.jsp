@@ -56,8 +56,9 @@ $(function(){
 	});
 	
 	$(".dataRow").click(function(){
-		let no = $(this).find(".no").text();
-		location="view.do?no="+ no + "&${pageObject.pageQuery}";
+		let goos_no = $(this).find(".goods_no").text();
+		location="view.do?goods_no="+ goos_no + "&inc=1" + "&${pageObject.pageQuery}" + "&${searchVO.query}";
+		
 	});
 	
 	//대분류 onchange일때 중분류도 바뀌도록

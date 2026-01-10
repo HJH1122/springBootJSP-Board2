@@ -74,12 +74,16 @@ public class GoodsController {
 	}
 	
 	@GetMapping("/view.do")
-	public String view(Model model, Long no, int inc) throws Exception{
+	public String view(Model model, Long goods_no, int inc, @ModelAttribute(name = "searchVO") GoodsSearchVO searchVO) throws Exception{
 		
 		log.info("write vo:");
 
 		
-		model.addAttribute("vo", service.view(no, inc));
+		model.addAttribute("vo", service.view(goods_no, inc));
+		model.addAttribute("imageList", service.viewImageList(goods_no));
+		model.addAttribute("sizeColorList", service.viewSizeColorList(goods_no));
+		model.addAttribute("optionList", service.viewOptionList(goods_no));
+		
 		
 		
 		return "goods/view";

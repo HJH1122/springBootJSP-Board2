@@ -22,9 +22,9 @@ public interface GoodsMapper {
 	
 	public Integer getTotalRow(@Param("searchVO") GoodsSearchVO searchVO);
 	
-	public Integer increase(Long no);
+	public Integer increase(@Param("goods_no") Long goods_no);
 
-	public GoodsVO view(Long no) throws Exception;
+	public GoodsVO view(@Param("goods_no") Long goods_no) throws Exception;
 	
 	//상품 정보 등록
 	public Integer write(GoodsVO vo) throws Exception;
@@ -44,6 +44,12 @@ public interface GoodsMapper {
 	public List<SizeVO> getSize(@Param("cate_code1") Integer cate_code1) throws Exception;
 	
 	public List<ColorVO> getColor(@Param("cate_code1") Integer cate_code1) throws Exception;
+
+	public List<GoodsImageVO> viewImageList(@Param("goods_no") Long goods_no);
+
+	public List<GoodsSizeColorVO> viewSizeColorList(@Param("goods_no") Long goods_no);
+
+	public List<GoodsOptionVO> viewOptionList(@Param("goods_no") Long goods_no);
 
 	
 }

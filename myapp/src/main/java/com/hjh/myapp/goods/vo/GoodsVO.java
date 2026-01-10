@@ -13,6 +13,7 @@ public class GoodsVO {
 	private Long goods_no;
 	private Integer cate_code1;
 	private Integer cate_code2;
+	private String cate_name;
 	private String goods_name;
 	private String detail_image_name;
 	private String content;

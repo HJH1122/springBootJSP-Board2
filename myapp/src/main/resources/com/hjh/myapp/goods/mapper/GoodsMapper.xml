@@ -67,21 +67,73 @@
 	<update id="increase">
 		update goods
 		set hit = hit + 1
-		where no = #{no}
+		where goods_no = #{goods_no}
 	</update>
 	
-	<insert id="view">
+	<select id="view" resultType="com.hjh.myapp.goods.vo.GoodsVO">
 	    select 
-	    	no,
-	    	title,
-	    	content,
-	    	writer,
-	    	write_date AS writeDate,
-	    	hit
+	    	g.goods_no,
+	    	g.goods_name,
+	    	g.content,
+	    	g.cate_code1,
+	    	g.cate_code2,
+	    	g.company,
+	    	g.product_date,
+	    	g.image_name,
+	    	g.detail_image_name,
+	    	p.price,
+	    	p.discount,
+	    	p.discount_rate,
+	    	p.sale_price,
+	    	p.delivery_charge,
+	    	p.saved_rate,
+	    	g.hit,
+	    	c.cate_name
 	    	
-	    from goods
-	    where no = #{no}
-	</insert>
+	    from goods g
+	    LEFT JOIN price p
+		    ON g.goods_no = p.goods_no
+		LEFT JOIN category c
+			ON g.cate_code1 = c.cate_code1
+			AND g.cate_code2 = c.cate_code2
+	    where g.goods_no = #{goods_no}
+	</select>
+	
+	<select id="viewImageList" resultType="com.hjh.myapp.goods.vo.GoodsImageVO">
+	    select 
+	    	goods_no,
+	    	image_no,
+	    	image_name
+	    	
+	    from goods_image
+	    where goods_no = #{goods_no}
+	</select>
+	
+	<select id="viewSizeColorList" resultType="com.hjh.myapp.goods.vo.GoodsSizeColorVO">
+	     SELECT
+	        gs.goods_sizeColor_no,
+	        gs.goods_no,
+	        gs.size_no,
+	        bs.size_name,
+	        gs.color_no,
+	        bc.color_name
+	    FROM goods_sizecolor gs
+	    INNER JOIN basic_size bs
+	        ON gs.size_no = bs.size_no
+	    LEFT JOIN basic_color bc
+	        ON gs.color_no = bc.color_no
+	    WHERE gs.goods_no = #{goods_no}
+	</select>
+	
+	<select id="viewOptionList" resultType="com.hjh.myapp.goods.vo.GoodsOptionVO">
+	    select 
+	    	goods_option_no,
+	    	goods_no,
+	    	option_name
+	    	
+	    from goods_option
+	    where goods_no = #{goods_no}
+	</select>
 	
 	<insert id="write"
 	        parameterType="com.hjh.myapp.goods.vo.GoodsVO"
